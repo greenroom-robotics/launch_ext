@@ -1,5 +1,5 @@
 [workspace]
-name = "launch_ext"
+name = "launch-ext"
 channels = [
   "http://localhost:8000",
   "https://prefix.dev/robostack-kilted",
@@ -9,10 +9,10 @@ platforms = ["linux-64", "linux-aarch64"]
 preview = ["pixi-build"]
 
 [dependencies]
-launch_ext = { path = "." }
+launch-ext = { path = "." }
 
 [package]
-name = "launch_ext"
+name = "launch-ext"
 version = "1.22.3"
 description = "Some extras for launch tooling."
 license = "MIT"
@@ -26,6 +26,7 @@ version = "*"
 mode = "pixi-native"
 build-type = "ament_python"
 distro = "kilted"
+build-number = 1
 
 [package.host-dependencies]
 python = "*"
