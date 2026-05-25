@@ -1,0 +1,48 @@
+name: Tag & Release (pixi)
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        type: choice
+        description: 'If not specified, all packages will be released.'
+        options:
+          - ""
+      ros_distro:
+        type: choice
+        description: ROS distro to release for
+        default: kilted
+        options:
+          - kilted
+      recipes_repo:
+        type: string
+        description: owner/repo of the conda recipes repo
+        default: greenroom-robotics/ros-kilted-recipes
+      changelog:
+        type: boolean
+        default: true
+        description: Generate and commit CHANGELOG.md
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: 2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: greenroom-robotics/mise/.github/actions/release@v2
+        with:
+          package: ${{ inputs.package }}
+          ros-distro: ${{ inputs.ros_distro }}
+          recipes-repo: ${{ inputs.recipes_repo }}
+          changelog: ${{ inputs.changelog }}
+          package-dir: .
+          gh-app-id: ${{ secrets.GH_APP_ID }}
+          gh-app-private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          azure-client-id: ${{ vars.AZURE_READER_CLIENT_ID }}
+          azure-tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
