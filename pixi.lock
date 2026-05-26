@@ -5,23 +5,12 @@ platforms:
 environments:
   default:
     channels:
-    - url: http://localhost:8000/
     - url: https://prefix.dev/robostack-kilted/
+    - url: http://localhost:8000/
     - url: https://prefix.dev/conda-forge/
     packages:
       linux-64:
       - conda: http://localhost:8000/linux-64/mise-2.3.0-hb0f4dca_0.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-action-msgs-2.3.1-np2py312h31f38b3_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-builtin-interfaces-2.3.1-np2py312h31f38b3_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-composition-interfaces-2.3.1-np2py312h31f38b3_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-example-interfaces-0.13.1-np2py312h31f38b3_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-fastdds-3.2.3-0a036e6_0_static_tinyxml.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h2ed9cc7_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-rcl-interfaces-2.3.1-np2py312h31f38b3_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h2ed9cc7_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-service-msgs-2.3.1-np2py312h31f38b3_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-type-description-interfaces-2.3.1-np2py312h2ed9cc7_3.conda
-      - conda: http://localhost:8000/linux-64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h31f38b3_3.conda
       - conda: https://prefix.dev/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
       - conda: https://prefix.dev/conda-forge/linux-64/attr-2.5.2-hb03c661_1.conda
       - conda: https://prefix.dev/conda-forge/linux-64/bzip2-1.0.8-hda65f42_9.conda
@@ -31,6 +20,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/linux-64/dbus-1.16.2-h24cb091_1.conda
       - conda: https://prefix.dev/conda-forge/linux-64/dbus-python-1.3.2-py312h7347394_6.conda
       - conda: https://prefix.dev/conda-forge/linux-64/fmt-12.1.0-hff5e90c_0.conda
+      - conda: https://prefix.dev/conda-forge/linux-64/foonathan-memory-0.7.4-h54a6638_1.conda
       - conda: https://prefix.dev/conda-forge/linux-64/keyutils-1.6.3-hb9d3cd8_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/krb5-1.22.2-ha1258a1_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/ld_impl_linux-64-2.45.1-default_hbd61a6d_102.conda
@@ -119,6 +109,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/noarch/typing_extensions-4.15.0-pyhcf101f3_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
       - conda: https://prefix.dev/conda-forge/noarch/zipp-4.1.0-pyhcf101f3_0.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-action-msgs-2.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ament-cmake-2.7.5-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ament-cmake-core-2.7.5-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ament-cmake-cppcheck-0.19.2-np2py312h2ed9cc7_19.conda
@@ -150,17 +141,24 @@ environments:
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ament-package-0.17.2-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ament-pep257-0.19.2-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ament-uncrustify-0.19.2-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-builtin-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-composition-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-cyclonedds-0.10.5-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-example-interfaces-0.13.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-fastcdr-2.3.5-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-fastdds-3.2.3-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-foonathan-memory-vendor-1.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-iceoryx-binding-c-2.0.5-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-iceoryx-hoofs-2.0.5-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-iceoryx-posh-2.0.5-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-launch-3.8.7-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-launch-ros-0.28.5-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-libyaml-vendor-1.7.1-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-osrf-pycommon-2.1.6-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-10.1.4-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-action-10.1.4-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-lifecycle-10.1.4-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-logging-interface-3.2.4-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-logging-spdlog-3.2.4-np2py312h918b84f_19.conda
@@ -183,6 +181,7 @@ environments:
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rmw-zenoh-cpp-0.6.6-np2py312ha80d210_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ros-environment-4.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ros-workspace-1.0.3-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rosidl-adapter-4.9.6-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rosidl-cli-4.9.6-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rosidl-cmake-4.9.6-np2py312h2ed9cc7_19.conda
@@ -208,26 +207,18 @@ environments:
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rosidl-typesupport-introspection-cpp-4.9.6-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rpyutils-0.6.3-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rti-connext-dds-cmake-module-1.1.1-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-service-msgs-2.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-spdlog-vendor-1.7.0-np2py312h918b84f_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-tracetools-8.6.0-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-type-description-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-uncrustify-vendor-3.1.0-np2py312h2ed9cc7_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-xacro-2.1.1-np2py312h2ed9cc7_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-zenoh-cpp-vendor-0.6.6-np2py312ha80d210_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-64/ros2-distro-mutex-0.15.0-kilted_19.conda
       - conda_source: launch-ext[9036ca44] @ .
       linux-aarch64:
       - conda: http://localhost:8000/linux-aarch64/mise-2.3.0-he8cfe8b_0.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-action-msgs-2.3.1-np2py312h61f2ce4_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-builtin-interfaces-2.3.1-np2py312h2c707e6_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-composition-interfaces-2.3.1-np2py312h61f2ce4_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-example-interfaces-0.13.1-np2py312h2c707e6_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-fastdds-3.2.3-ad7ed59_0_static_tinyxml.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h61f2ce4_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-rcl-interfaces-2.3.1-np2py312h2c707e6_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h61f2ce4_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-service-msgs-2.3.1-np2py312h2c707e6_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-type-description-interfaces-2.3.1-np2py312h2c707e6_3.conda
-      - conda: http://localhost:8000/linux-aarch64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h2c707e6_3.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/_openmp_mutex-4.5-20_gnu.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/attr-2.5.2-he30d5cf_1.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/bzip2-1.0.8-h4777abc_9.conda
@@ -237,6 +228,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/linux-aarch64/dbus-1.16.2-h70963c4_1.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/dbus-python-1.3.2-py312hf371ade_6.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/fmt-12.1.0-h20c602a_0.conda
+      - conda: https://prefix.dev/conda-forge/linux-aarch64/foonathan-memory-0.7.4-h7ac5ae9_1.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/keyutils-1.6.3-h86ecc28_0.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/krb5-1.22.2-hfd895c2_0.conda
       - conda: https://prefix.dev/conda-forge/linux-aarch64/ld_impl_linux-aarch64-2.45.1-default_h1979696_102.conda
@@ -325,6 +317,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/noarch/typing_extensions-4.15.0-pyhcf101f3_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
       - conda: https://prefix.dev/conda-forge/noarch/zipp-4.1.0-pyhcf101f3_0.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-action-msgs-2.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ament-cmake-2.7.5-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ament-cmake-core-2.7.5-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ament-cmake-cppcheck-0.19.2-np2py312h61f2ce4_19.conda
@@ -356,17 +349,24 @@ environments:
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ament-package-0.17.2-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ament-pep257-0.19.2-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ament-uncrustify-0.19.2-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-builtin-interfaces-2.3.1-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-composition-interfaces-2.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-cyclonedds-0.10.5-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-example-interfaces-0.13.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-fastcdr-2.3.5-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-fastdds-3.2.3-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-foonathan-memory-vendor-1.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-iceoryx-binding-c-2.0.5-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-iceoryx-hoofs-2.0.5-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-iceoryx-posh-2.0.5-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-launch-3.8.7-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-launch-ros-0.28.5-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-libyaml-vendor-1.7.1-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-osrf-pycommon-2.1.6-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-10.1.4-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-action-10.1.4-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-interfaces-2.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-lifecycle-10.1.4-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-logging-interface-3.2.4-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-logging-spdlog-3.2.4-np2py312ha677571_19.conda
@@ -389,6 +389,7 @@ environments:
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rmw-zenoh-cpp-0.6.6-np2py312h1cd77a6_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ros-environment-4.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ros-workspace-1.0.3-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rosidl-adapter-4.9.6-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rosidl-cli-4.9.6-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rosidl-cmake-4.9.6-np2py312h61f2ce4_19.conda
@@ -414,9 +415,12 @@ environments:
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rosidl-typesupport-introspection-cpp-4.9.6-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rpyutils-0.6.3-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rti-connext-dds-cmake-module-1.1.1-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-service-msgs-2.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-spdlog-vendor-1.7.0-np2py312ha677571_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-tracetools-8.6.0-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-type-description-interfaces-2.3.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-uncrustify-vendor-3.1.0-np2py312h61f2ce4_19.conda
+      - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-xacro-2.1.1-np2py312h61f2ce4_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-zenoh-cpp-vendor-0.6.6-np2py312h1cd77a6_19.conda
       - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros2-distro-mutex-0.15.0-kilted_19.conda
@@ -431,202 +435,6 @@ packages:
   - __glibc >=2.17
   size: 2640204
   timestamp: 1779752573568
-- conda: http://localhost:8000/linux-64/ros-kilted-action-msgs-2.3.1-np2py312h31f38b3_3.conda
-  sha256: cde535a53dfd5d9fc3de12f5f6559109a8fa97514fa117a15a5413040628866e
-  md5: ed90b0f7b2ed4d8af49e571052d69078
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros-kilted-service-msgs
-  - ros-kilted-unique-identifier-msgs
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libstdcxx >=13
-  - libgcc >=13
-  - __glibc >=2.17,<3.0.a0
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - numpy >=1.23,<3
-  - python_abi 3.12.* *_cp312
-  license: Apache-2.0
-  size: 153254
-  timestamp: 1779689220540
-- conda: http://localhost:8000/linux-64/ros-kilted-builtin-interfaces-2.3.1-np2py312h31f38b3_3.conda
-  sha256: fa298fcc9b74adaaf93b9576c71965a687e5a8e6f6ff677084391e6c6a6cdfd5
-  md5: a9b617431e706b9039f829ac3c316f9d
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - __glibc >=2.17,<3.0.a0
-  - libstdcxx >=13
-  - libgcc >=13
-  - python_abi 3.12.* *_cp312
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 79574
-  timestamp: 1779689220543
-- conda: http://localhost:8000/linux-64/ros-kilted-composition-interfaces-2.3.1-np2py312h31f38b3_3.conda
-  sha256: b65b0d2156b785c59ed447c6aae6ca777c57cb15d61d5493f7c7c1a31beff229
-  md5: 53a0dfca20b4a45f772324c273fdcc20
-  depends:
-  - python
-  - ros-kilted-rcl-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - __glibc >=2.17,<3.0.a0
-  - libgcc >=13
-  - libstdcxx >=13
-  - python_abi 3.12.* *_cp312
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 233122
-  timestamp: 1779689220546
-- conda: http://localhost:8000/linux-64/ros-kilted-example-interfaces-0.13.1-np2py312h31f38b3_3.conda
-  sha256: 8e19e526cbea4eb84d1653d316fffe68983b1db4f68c40cac9b295d082f82c5e
-  md5: 589ec297601700a4dd80cdf65fbb225e
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=13
-  - __glibc >=2.17,<3.0.a0
-  - libstdcxx >=13
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - python_abi 3.12.* *_cp312
-  license: Apache-2.0
-  size: 547728
-  timestamp: 1779689220553
-- conda: http://localhost:8000/linux-64/ros-kilted-fastdds-3.2.3-0a036e6_0_static_tinyxml.conda
-  sha256: 26cbbea1250cbb19fd022d082a038a754351c2d538ef55a624ae46a48ac45d9c
-  md5: df6fe8234977eabc87aad4dd76e0e236
-  depends:
-  - libstdcxx >=13
-  - libgcc >=13
-  - __glibc >=2.17,<3.0.a0
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - openssl >=3.6.2,<4.0a0
-  track_features:
-  - ros-kilted-fastdds-p-0
-  license: Apache-2.0
-  run_exports:
-    weak:
-    - ros-kilted-fastdds >=3.2.3,<3.3.0a0
-  size: 5261981
-  timestamp: 1779687420808
-- conda: http://localhost:8000/linux-64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h2ed9cc7_3.conda
-  sha256: 9401e1b1df8f5026f262c812e83a6bccb54b2bf34036c0343038c876d8720131
-  md5: 1f54e508d52ec5927fd49bc5b72c19ec
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libstdcxx >=14
-  - libgcc >=14
-  - __glibc >=2.17,<3.0.a0
-  - python_abi 3.12.* *_cp312
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 271332
-  timestamp: 1779689220573
-- conda: http://localhost:8000/linux-64/ros-kilted-rcl-interfaces-2.3.1-np2py312h31f38b3_3.conda
-  sha256: 0e8d1ba4867a740bad4824463cb51e0f9fbd7e8ac375579108e6b17f8ad5de96
-  md5: c1e8ce9f4c2a0091e0360e233edfbfa6
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - __glibc >=2.17,<3.0.a0
-  - libgcc >=13
-  - libstdcxx >=13
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - numpy >=1.23,<3
-  license: Apache-2.0
-  size: 587957
-  timestamp: 1779689220587
-- conda: http://localhost:8000/linux-64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h2ed9cc7_3.conda
-  sha256: f6d193f29a7d05e872891acda11c2a9759028b0bc8f52412e8af979a2b14505d
-  md5: a1b8f286b93c94bf1990404dc6764940
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-rcl-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=14
-  - __glibc >=2.17,<3.0.a0
-  - libstdcxx >=14
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - numpy >=1.23,<3
-  license: Apache-2.0
-  size: 72071
-  timestamp: 1779689220590
-- conda: http://localhost:8000/linux-64/ros-kilted-service-msgs-2.3.1-np2py312h31f38b3_3.conda
-  sha256: c00a894d8da42b621c818bfb1de775fcfc9c2ff8fca241f6ed8baac46fca0089
-  md5: 4d9e2ca8cf833f71317237aeb12e640e
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libstdcxx >=13
-  - libgcc >=13
-  - __glibc >=2.17,<3.0.a0
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - python_abi 3.12.* *_cp312
-  license: Apache-2.0
-  size: 79829
-  timestamp: 1779689220611
-- conda: http://localhost:8000/linux-64/ros-kilted-type-description-interfaces-2.3.1-np2py312h2ed9cc7_3.conda
-  sha256: 6c06db022c81bdc7ec7036234a6ad69c536fa1a5109afe97ae4ee59d0632540b
-  md5: 40b9fe43d0ae8fe2077ffcdd6149ebc3
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros-kilted-service-msgs
-  - ros2-distro-mutex 0.15.* kilted_*
-  - __glibc >=2.17,<3.0.a0
-  - libgcc >=14
-  - libstdcxx >=14
-  - numpy >=1.23,<3
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 238615
-  timestamp: 1779689220646
-- conda: http://localhost:8000/linux-64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h31f38b3_3.conda
-  sha256: ffab26e57a5f43ce71742a387843da99225b8a40eb919080d41ffe887f971dc0
-  md5: dafea5140213f3e98d381643ef032fd0
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=13
-  - __glibc >=2.17,<3.0.a0
-  - libstdcxx >=13
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - python_abi 3.12.* *_cp312
-  license: BSD-3-Clause
-  size: 73631
-  timestamp: 1779689220649
 - conda: http://localhost:8000/linux-aarch64/mise-2.3.0-he8cfe8b_0.conda
   sha256: 5135381b1eaafd96c18b9beba4bff8705239cc32d2bff63698f43fd768896fb3
   md5: f2ed8c63f86aa72559a36b0c752207ff
@@ -636,191 +444,6 @@ packages:
   - __glibc >=2.17
   size: 2638582
   timestamp: 1779752607680
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-action-msgs-2.3.1-np2py312h61f2ce4_3.conda
-  sha256: 60b022a7238aec18d9e3e1410f5483a87139e9d6d0042c1756244a3f06849f0b
-  md5: 68bb6d962a3dac0c4d35c823d394c1ec
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros-kilted-service-msgs
-  - ros-kilted-unique-identifier-msgs
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=14
-  - libstdcxx >=14
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - numpy >=1.23,<3
-  license: Apache-2.0
-  size: 158715
-  timestamp: 1779689225311
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-builtin-interfaces-2.3.1-np2py312h2c707e6_3.conda
-  sha256: 6a52d960561ba8768622d1ea2d515f4123eff32d764aa2b567afa94b38cbe63a
-  md5: 1cf0b84d40007230f2e7e40f06c7e10a
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=13
-  - libstdcxx >=13
-  - numpy >=1.23,<3
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 83474
-  timestamp: 1779689225316
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-composition-interfaces-2.3.1-np2py312h61f2ce4_3.conda
-  sha256: 860d2ded4f54ecbc9ca57b191321ff1285298ec2a44b8c542ee2dc9f3a5231fc
-  md5: bbb5848765d1dea1ce3e4ea0bef41b4c
-  depends:
-  - python
-  - ros-kilted-rcl-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libstdcxx >=14
-  - libgcc >=14
-  - python_abi 3.12.* *_cp312
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 232358
-  timestamp: 1779689225320
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-example-interfaces-0.13.1-np2py312h2c707e6_3.conda
-  sha256: ce5ee8b89779803cedf9d812003358ac932379bdbeb1483eda817173214a849e
-  md5: 54f821223dbfa452abc38728354e1b44
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=13
-  - libstdcxx >=13
-  - numpy >=1.23,<3
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 556301
-  timestamp: 1779689225329
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-fastdds-3.2.3-ad7ed59_0_static_tinyxml.conda
-  sha256: 43d52c6e3baf6c1855350de34edc0c1a9180b9765ed1a7e6aee5936888de392a
-  md5: 7f918e7e32b1d6b125ca32b8103e06ee
-  depends:
-  - libgcc >=14
-  - libstdcxx >=14
-  - openssl >=3.6.2,<4.0a0
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  track_features:
-  - ros-kilted-fastdds-p-0
-  license: Apache-2.0
-  run_exports:
-    weak:
-    - ros-kilted-fastdds >=3.2.3,<3.3.0a0
-  size: 5177879
-  timestamp: 1779687420744
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h61f2ce4_3.conda
-  sha256: 0f87985aa6e1b1d34c09db7408874fc10ce12a5ce57a8026b17f1f4ff339221e
-  md5: d301387df8059697799241ec3ad082d3
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=14
-  - libstdcxx >=14
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - python_abi 3.12.* *_cp312
-  license: Apache-2.0
-  size: 280535
-  timestamp: 1779689225353
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-rcl-interfaces-2.3.1-np2py312h2c707e6_3.conda
-  sha256: 9fe871c4bbcd7e45e9759ea206bd2ebd12cea957bd459e5a2d1cecd8c0a2cec4
-  md5: 42fdfcb4341b70e42e1c87611bb7fb84
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libstdcxx >=13
-  - libgcc >=13
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - numpy >=1.23,<3
-  - python_abi 3.12.* *_cp312
-  license: Apache-2.0
-  size: 595471
-  timestamp: 1779689225371
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h61f2ce4_3.conda
-  sha256: 979049bb8312e5840bb21e77e296a523f7abcbd325fe5aa63bd43bb355009d58
-  md5: a29df52c5a394fda600497b673985bed
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-rcl-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-default-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=14
-  - libstdcxx >=14
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - numpy >=1.23,<3
-  license: Apache-2.0
-  size: 75264
-  timestamp: 1779689225375
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-service-msgs-2.3.1-np2py312h2c707e6_3.conda
-  sha256: 8fc0e12d786e687473f79685aec6b545fad9f9e70a372b4fae6011668e24c945
-  md5: 5b52e796f7d9d2940bdce321d12cb14b
-  depends:
-  - python
-  - ros-kilted-builtin-interfaces
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=13
-  - libstdcxx >=13
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  - python_abi 3.12.* *_cp312
-  license: Apache-2.0
-  size: 83370
-  timestamp: 1779689225402
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-type-description-interfaces-2.3.1-np2py312h2c707e6_3.conda
-  sha256: 6449f33f86243171f71ed9d824f80ee3b30f5838ce145e903f1823557d29d77a
-  md5: f7563f9b47fcc61122030ce9c05093b5
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros-kilted-service-msgs
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libstdcxx >=13
-  - libgcc >=13
-  - numpy >=1.23,<3
-  - python_abi 3.12.* *_cp312
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: Apache-2.0
-  size: 242917
-  timestamp: 1779689225446
-- conda: http://localhost:8000/linux-aarch64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h2c707e6_3.conda
-  sha256: 5cdd95b5a77d52c894b705bac55dff45d74b72801284bcab7f94fe91fe71fe6b
-  md5: 0d453562cb4333356c9574529abc44ca
-  depends:
-  - python
-  - ros-kilted-ros-workspace
-  - ros-kilted-rosidl-core-runtime
-  - ros2-distro-mutex 0.15.* kilted_*
-  - libgcc >=13
-  - libstdcxx >=13
-  - python_abi 3.12.* *_cp312
-  - numpy >=1.23,<3
-  - ros2-distro-mutex >=0.15.0,<0.16.0a0
-  license: BSD-3-Clause
-  size: 76773
-  timestamp: 1779689225451
 - conda: https://prefix.dev/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
   build_number: 20
   sha256: 1dd3fffd892081df9726d7eb7e0dea6198962ba775bd88842135a4ddb4deb3c9
@@ -992,6 +615,19 @@ packages:
     - fmt >=12.1.0,<12.2.0a0
   size: 198107
   timestamp: 1767681153946
+- conda: https://prefix.dev/conda-forge/linux-64/foonathan-memory-0.7.4-h54a6638_1.conda
+  sha256: e356abf4a5e095c6b723f6b77dbbdf31957dffb122adab2d54496c70c7a28c4f
+  md5: 6f78294a2bc5b7fe6310b7677fd37e7b
+  depends:
+  - libstdcxx >=14
+  - libgcc >=14
+  - __glibc >=2.17,<3.0.a0
+  license: Zlib
+  run_exports:
+    weak:
+    - foonathan-memory >=0.7.4,<0.7.5.0a0
+  size: 184682
+  timestamp: 1779093090230
 - conda: https://prefix.dev/conda-forge/linux-64/gcc_impl_linux-64-15.2.0-he0086c7_19.conda
   sha256: a48400ec4b73369c1c59babe4ad35821b63a88bba0ec40a80cea5f8c53a26b83
   md5: e3be72048d3c4a78b8e27ec48ba06252
@@ -2141,6 +1777,18 @@ packages:
     - fmt >=12.1.0,<12.2.0a0
   size: 197671
   timestamp: 1767681179883
+- conda: https://prefix.dev/conda-forge/linux-aarch64/foonathan-memory-0.7.4-h7ac5ae9_1.conda
+  sha256: c2cbe03f3dd0d2f4f6278febefe6924610d737bd85f446e44acbe3cb7926b12c
+  md5: 838049b1476371c7377622218f04d97b
+  depends:
+  - libstdcxx >=14
+  - libgcc >=14
+  license: Zlib
+  run_exports:
+    weak:
+    - foonathan-memory >=0.7.4,<0.7.5.0a0
+  size: 183451
+  timestamp: 1779093097166
 - conda: https://prefix.dev/conda-forge/linux-aarch64/gcc_impl_linux-aarch64-15.2.0-h3530432_19.conda
   sha256: cd23829b5fb7f3ff5f44eab2da1a993e06bdf759b681a0a7a73bb5783755b6b3
   md5: 66dfb62e7a47e2b511f9c5ee0ff1abf3
@@ -3619,6 +3267,27 @@ packages:
   run_exports: {}
   size: 24190
   timestamp: 1779159948016
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-action-msgs-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: ab6b1ff4ab9b3c408510ce782f07e482a6bd0c4966449bb0ed8af1ef369b878b
+  md5: ea677b2d684881576134be9d6171e2e7
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros-kilted-service-msgs
+  - ros-kilted-unique-identifier-msgs
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libgcc >=14
+  - __glibc >=2.17,<3.0.a0
+  - libstdcxx >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  license: Apache-2.0
+  run_exports: {}
+  size: 153376
+  timestamp: 1779608175881
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-ament-cmake-2.7.5-np2py312h2ed9cc7_19.conda
   sha256: b70debda536f646978317d943fa8fd8654202faeb68a8f9ea00848e5baf05821
   md5: dc4ec63933a00e7b40cf45d8ae3f941a
@@ -4206,6 +3875,43 @@ packages:
   run_exports: {}
   size: 68128
   timestamp: 1779605132195
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-builtin-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: fd5029a81478b834e3dfe701338235816e6e26fb12500b09e3608561658d0446
+  md5: da43ec22f4f006e111fc6b18a9075e60
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - __glibc >=2.17,<3.0.a0
+  - libstdcxx >=14
+  - libgcc >=14
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0
+  run_exports: {}
+  size: 80189
+  timestamp: 1779608110310
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-composition-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: 011ebf7c9f9a87e763a5ef0d851b8ed62a697b39d1d14815aba52dd81abfa199
+  md5: 2fa5af1ffc7f24f8c958caeb63505d90
+  depends:
+  - python
+  - ros-kilted-rcl-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - __glibc >=2.17,<3.0.a0
+  - libgcc >=14
+  - libstdcxx >=14
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0
+  run_exports: {}
+  size: 227086
+  timestamp: 1779613858544
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-cyclonedds-0.10.5-np2py312h2ed9cc7_19.conda
   sha256: bb0624a1544c72adf3e5d0bc4aaded6dcfaa36e9ed35c5a2690a298958b80a6a
   md5: e7afdf7409e8991d4a712f662635fcb5
@@ -4228,6 +3934,24 @@ packages:
   run_exports: {}
   size: 1198522
   timestamp: 1779604822828
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-example-interfaces-0.13.1-np2py312h2ed9cc7_19.conda
+  sha256: 4caa9921de6b8cef331f7325a056c9e31e07acad326f7b4c86add46b6b45b317
+  md5: 0bc551bcb8a2c02e94c53954ee6a36ce
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libgcc >=14
+  - libstdcxx >=14
+  - __glibc >=2.17,<3.0.a0
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 545466
+  timestamp: 1779608322977
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-fastcdr-2.3.5-np2py312h2ed9cc7_19.conda
   sha256: ffea70d54ac36d34bf5c1ab84e9ecaf9f2b3bab75b3f6ec8b1f51111501766dc
   md5: 9d1a0f2f735ec2d1f74dfbb58d4f5c30
@@ -4245,6 +3969,49 @@ packages:
   run_exports: {}
   size: 89039
   timestamp: 1779604993851
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-fastdds-3.2.3-np2py312h2ed9cc7_19.conda
+  sha256: b117435b15c0dcfb2664c03a31b3d3af65e47e0c312fa455c443029e0e86e9e5
+  md5: 6fc45677dcedded446e48b7c91f83de3
+  depends:
+  - openssl
+  - python
+  - ros-kilted-fastcdr
+  - ros-kilted-foonathan-memory-vendor
+  - ros-kilted-ros-workspace
+  - ros2-distro-mutex 0.15.* kilted_*
+  - tinyxml2
+  - __glibc >=2.17,<3.0.a0
+  - libstdcxx >=14
+  - libgcc >=14
+  - openssl >=3.6.2,<4.0a0
+  - python_abi 3.12.* *_cp312
+  - tinyxml2 >=11.0.0,<11.1.0a0
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 5049444
+  timestamp: 1779605667892
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-foonathan-memory-vendor-1.3.1-np2py312h2ed9cc7_19.conda
+  sha256: f43cf552cf5639b4a3335cfd606fc5b0de01da420e020457b20b0a61974558a3
+  md5: 495cdb55f701ea09ae7c292c3acc6231
+  depends:
+  - foonathan-memory
+  - python
+  - ros-kilted-ros-workspace
+  - ros2-distro-mutex 0.15.* kilted_*
+  - cmake
+  - libstdcxx >=14
+  - libgcc >=14
+  - __glibc >=2.17,<3.0.a0
+  - foonathan-memory >=0.7.4,<0.7.5.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0 OR Zlib
+  run_exports: {}
+  size: 19059
+  timestamp: 1779605396637
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-iceoryx-binding-c-2.0.5-np2py312h2ed9cc7_19.conda
   sha256: b48015500f6735c37d45c679e116ea5cba614837ce5ba8e56db2320a7b3e66ce
   md5: cd22bc687dd66ee58315bbbfc8e7e476
@@ -4366,6 +4133,24 @@ packages:
   run_exports: {}
   size: 29503
   timestamp: 1779606081401
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: df45c33521fe2ff33a7c16ea56fb2fe5c7b8c781af8f2a1d55de3871063f7198
+  md5: 382a89e43088a04594e5cb0e9376cee0
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - __glibc >=2.17,<3.0.a0
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 271290
+  timestamp: 1779608279450
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-osrf-pycommon-2.1.6-np2py312h2ed9cc7_19.conda
   sha256: b61953fcef48347d1169cee80056588de94b283c303cc6f0b4902cf9d68a548c
   md5: 8a998cd93b7b941cd1581631dc38bc8a
@@ -4439,6 +4224,25 @@ packages:
   run_exports: {}
   size: 82550
   timestamp: 1779615269311
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: a1879dc6017d4ff6ea8f88d9beab2602788e8ccf7501a840cb59522b02dcf838
+  md5: 59fd8c89441958cd0bcc7eacd104c355
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - __glibc >=2.17,<3.0.a0
+  - libstdcxx >=14
+  - libgcc >=14
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0
+  run_exports: {}
+  size: 578844
+  timestamp: 1779608362294
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rcl-lifecycle-10.1.4-np2py312h2ed9cc7_19.conda
   sha256: 3232dbf5ca1d456eacb08f12ed00e6ba7bd05f4d38cbcc98da3cd72e653fc6d7
   md5: bb3d19a846ec5545d587fbdd493fa917
@@ -4952,6 +4756,26 @@ packages:
   run_exports: {}
   size: 34816
   timestamp: 1779604502021
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: 1be4b8846f263e48124742c3a133ed72504de013f77c43a35e86636162b30d90
+  md5: 336c65972afd32359404b92d31cdca95
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-rcl-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libgcc >=14
+  - libstdcxx >=14
+  - __glibc >=2.17,<3.0.a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0
+  run_exports: {}
+  size: 72430
+  timestamp: 1779613846535
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-rosidl-adapter-4.9.6-np2py312h2ed9cc7_19.conda
   sha256: 5ebfd62fb98ecb6cd53f9934b0af85405922ea73a87d153adb2d584a8a42f44b
   md5: 923e0cf7da4c774f7e774071efea4aa7
@@ -5527,6 +5351,25 @@ packages:
   run_exports: {}
   size: 31457
   timestamp: 1779606009541
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-service-msgs-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: 7cfbc976bc1cb4ccbc6df86213c5f1724f534fdf78c2918c9cc5d4135434347e
+  md5: af272ace5140dd23a29793b793a7de1f
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libgcc >=14
+  - libstdcxx >=14
+  - __glibc >=2.17,<3.0.a0
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 79751
+  timestamp: 1779608146203
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-spdlog-vendor-1.7.0-np2py312h918b84f_19.conda
   sha256: a577e477ed963af97b9a21e9314047f4cb52d0e9a67208cff4b0189111265e2a
   md5: deb431c2da1eb15278fa73b4bbf399ea
@@ -5567,6 +5410,25 @@ packages:
   run_exports: {}
   size: 76015
   timestamp: 1779606074244
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-type-description-interfaces-2.3.1-np2py312h2ed9cc7_19.conda
+  sha256: 33863cb23deba8478ccaf079bbc7b012d2e1d7a2a36095de2f9555c2136b9250
+  md5: 97d225c052a2575f854c6e50d583d949
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros-kilted-service-msgs
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libgcc >=14
+  - __glibc >=2.17,<3.0.a0
+  - libstdcxx >=14
+  - python_abi 3.12.* *_cp312
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 236573
+  timestamp: 1779608193723
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-uncrustify-vendor-3.1.0-np2py312h2ed9cc7_19.conda
   sha256: 9a9c0b3f7b4bca26030ff105dd3071a2efe8ccd6888e0f7729e8aab12d158819
   md5: 3b12d7808aea60a3432049d68d83e0ba
@@ -5585,6 +5447,24 @@ packages:
   run_exports: {}
   size: 22717
   timestamp: 1779605017744
+- conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h2ed9cc7_19.conda
+  sha256: 21de1d58fe638b40e7f44357662313a6cc5636409782ac71f21a4bb7d65122f7
+  md5: 572ff23433b051880ce3a2030b10d79f
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libgcc >=14
+  - __glibc >=2.17,<3.0.a0
+  - libstdcxx >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  license: BSD-3-Clause
+  run_exports: {}
+  size: 73952
+  timestamp: 1779608121212
 - conda: https://prefix.dev/robostack-kilted/linux-64/ros-kilted-xacro-2.1.1-np2py312h2ed9cc7_19.conda
   sha256: d7b64eb043903f622b74f22d7345728ee0de09d2b2027a1506da7259b277338b
   md5: e02ca5336551e404c51290bcade24c94
@@ -5640,6 +5520,26 @@ packages:
     - ros2-distro-mutex >=0.15.0,<0.16.0a0
   size: 2375
   timestamp: 1779604469977
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-action-msgs-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: 1c9586ef5e53ba20781d73858c9c34a550b381f45dc8e6365d32236c19e02fcf
+  md5: 090e60432085cd6bdc735adae0e79aaa
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros-kilted-service-msgs
+  - ros-kilted-unique-identifier-msgs
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0
+  run_exports: {}
+  size: 157612
+  timestamp: 1779606822139
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-ament-cmake-2.7.5-np2py312h61f2ce4_19.conda
   sha256: ee1ff1bc5e78a498f3e42ce6210756c24f380cf892c73929f6d8b56b9fba1ef2
   md5: f0f4eac71284d7ca217bda1b7351d3e7
@@ -6196,6 +6096,41 @@ packages:
   run_exports: {}
   size: 68064
   timestamp: 1779605317810
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-builtin-interfaces-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: e5a0726bbc7cc6c2dc52fcc16752c4c43f291eb6525b2373e37a7e305c82b6f0
+  md5: 466cd4c4694a732596815082dcb0f427
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libgcc >=14
+  - libstdcxx >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 84001
+  timestamp: 1779606755338
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-composition-interfaces-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: 01c154fa271c16613b1039eb4c68a025ca587e5be92a7449404ea080aa6b8079
+  md5: ae5bbb9126f225b7d681d8149e9dc050
+  depends:
+  - python
+  - ros-kilted-rcl-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  license: Apache-2.0
+  run_exports: {}
+  size: 232836
+  timestamp: 1779607155347
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-cyclonedds-0.10.5-np2py312h61f2ce4_19.conda
   sha256: 041b4a791b3c0a8738e3845e0132ad18633315121725be5967da1340fd42d05a
   md5: 25e210e8dc101fd04c54182d0003b2b1
@@ -6217,6 +6152,23 @@ packages:
   run_exports: {}
   size: 1261998
   timestamp: 1779605047379
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-example-interfaces-0.13.1-np2py312h61f2ce4_19.conda
+  sha256: 4bb7a3964f203cb25cf694cc524aaa13abd85b0b02bd583e600db2d99db66bbc
+  md5: 1a782877b423caf5870fb2ee01155cdf
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  license: Apache-2.0
+  run_exports: {}
+  size: 555217
+  timestamp: 1779606951267
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-fastcdr-2.3.5-np2py312h61f2ce4_19.conda
   sha256: 6a3c552210f6685df01e3181642aa278ab04a9fde20840bef38e4948d0a0e9c9
   md5: db568b5fc87f8c13702ad20230680b38
@@ -6233,6 +6185,47 @@ packages:
   run_exports: {}
   size: 86099
   timestamp: 1779605187845
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-fastdds-3.2.3-np2py312h61f2ce4_19.conda
+  sha256: 329b6aa4a08dac94863cd2d7beb78ceaa37160995334ab915696190ad84525ab
+  md5: f3baa8fe4d802e0eedfdd8a1d773bf3c
+  depends:
+  - openssl
+  - python
+  - ros-kilted-fastcdr
+  - ros-kilted-foonathan-memory-vendor
+  - ros-kilted-ros-workspace
+  - ros2-distro-mutex 0.15.* kilted_*
+  - tinyxml2
+  - libstdcxx >=14
+  - libgcc >=14
+  - openssl >=3.6.2,<4.0a0
+  - tinyxml2 >=11.0.0,<11.1.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0
+  run_exports: {}
+  size: 4849111
+  timestamp: 1779605801122
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-foonathan-memory-vendor-1.3.1-np2py312h61f2ce4_19.conda
+  sha256: 08b7b754b6190feba8216703b586043cb602d4add76821ce9562f522cff6e583
+  md5: 50c268b0798e3fdfe35278c40074292f
+  depends:
+  - foonathan-memory
+  - python
+  - ros-kilted-ros-workspace
+  - ros2-distro-mutex 0.15.* kilted_*
+  - cmake
+  - libstdcxx >=14
+  - libgcc >=14
+  - foonathan-memory >=0.7.4,<0.7.5.0a0
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  license: Apache-2.0 OR Zlib
+  run_exports: {}
+  size: 18959
+  timestamp: 1779605589269
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-iceoryx-binding-c-2.0.5-np2py312h61f2ce4_19.conda
   sha256: cbac939496fc2881533c7d667aadaf2c9f097356cf78a6509ab58aa23bb3b92a
   md5: c0a7dfd2851c9c72d41cf8312da14519
@@ -6348,6 +6341,23 @@ packages:
   run_exports: {}
   size: 29390
   timestamp: 1779606152505
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-lifecycle-msgs-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: 9c505039424d3ca485e6a29be99e5e2e1366481d97cfeab720f4aba068cfd506
+  md5: a5b7d0cf6fb042ba9c27b6f9b485167d
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  license: Apache-2.0
+  run_exports: {}
+  size: 280517
+  timestamp: 1779606909800
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-osrf-pycommon-2.1.6-np2py312h61f2ce4_19.conda
   sha256: 149e180ab60b7df68ce477b6b69dc67757d3061565286f389332612089b6aff3
   md5: 1bca577b2eff76ebba6e2980f8670805
@@ -6418,6 +6428,24 @@ packages:
   run_exports: {}
   size: 83270
   timestamp: 1779608324891
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-interfaces-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: 00cab0335dbb0fe238f55b2c4ffc6b6dc183a09892b7a4c758567498b03382bd
+  md5: c5ef54c3e4669f68971c43f54c4ec875
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - python_abi 3.12.* *_cp312
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 588507
+  timestamp: 1779606978663
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rcl-lifecycle-10.1.4-np2py312h61f2ce4_19.conda
   sha256: 0043a0557e8f0d4e31155f2cb44157f66d707cae92cd6c7c146d6dad46b02798
   md5: 0eabb48101525e67cc7cb8e92d87fe14
@@ -6909,6 +6937,25 @@ packages:
   run_exports: {}
   size: 34895
   timestamp: 1779604742677
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rosgraph-msgs-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: 4682e3fef89770f14a68a0d1f27322e753ea33b300c54e1aaf931699bc153174
+  md5: 2dc855f474d7f1bfa3345574b68624d1
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-rcl-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-default-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - python_abi 3.12.* *_cp312
+  - numpy >=1.23,<3
+  license: Apache-2.0
+  run_exports: {}
+  size: 75350
+  timestamp: 1779607144810
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-rosidl-adapter-4.9.6-np2py312h61f2ce4_19.conda
   sha256: 78544e069c905a426d3dc209c55d990ad80dce538663340c8e8b6f77fb6c38e2
   md5: 5c02d31594412572fee0e959527baaa5
@@ -7459,6 +7506,24 @@ packages:
   run_exports: {}
   size: 31367
   timestamp: 1779606061889
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-service-msgs-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: bd5feaab4be1d74da9d1ac2252fc643edcc552593d46179b196292019825b506
+  md5: 4146e9f7616d240d23dffce8d9dc60ec
+  depends:
+  - python
+  - ros-kilted-builtin-interfaces
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - numpy >=1.23,<3
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - python_abi 3.12.* *_cp312
+  license: Apache-2.0
+  run_exports: {}
+  size: 83178
+  timestamp: 1779606793884
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-spdlog-vendor-1.7.0-np2py312ha677571_19.conda
   sha256: 832060c2c4392db1e47000623b0bf3ec9e6c2c97529482938cf9d20303cfc1b7
   md5: 016ff070c7eab36350b8d0ed87afba77
@@ -7497,6 +7562,24 @@ packages:
   run_exports: {}
   size: 75239
   timestamp: 1779606145223
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-type-description-interfaces-2.3.1-np2py312h61f2ce4_19.conda
+  sha256: 66935cabdb2de6d055c32676870be56775eac74a303cd6a310809ec0c97b9ce8
+  md5: c1e53a17fb65245aa512dc252aac6e42
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros-kilted-service-msgs
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  license: Apache-2.0
+  run_exports: {}
+  size: 240464
+  timestamp: 1779606835605
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-uncrustify-vendor-3.1.0-np2py312h61f2ce4_19.conda
   sha256: b7ec7590e6785b92a782c4800a57c42a21bf14fe037402db16e0b9e5c66c74c1
   md5: dfef66bded09d993d4fa2f8cfbddfc38
@@ -7514,6 +7597,23 @@ packages:
   run_exports: {}
   size: 22773
   timestamp: 1779605210158
+- conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-unique-identifier-msgs-2.7.0-np2py312h61f2ce4_19.conda
+  sha256: c6406d2a21370e2dfa10cbac1c438d6f9974edf5733dbb02854ede8b69deefce
+  md5: bbd62c3b46a750973462edf0572c7d33
+  depends:
+  - python
+  - ros-kilted-ros-workspace
+  - ros-kilted-rosidl-core-runtime
+  - ros2-distro-mutex 0.15.* kilted_*
+  - libstdcxx >=14
+  - libgcc >=14
+  - ros2-distro-mutex >=0.15.0,<0.16.0a0
+  - numpy >=1.23,<3
+  - python_abi 3.12.* *_cp312
+  license: BSD-3-Clause
+  run_exports: {}
+  size: 76767
+  timestamp: 1779606767449
 - conda: https://prefix.dev/robostack-kilted/linux-aarch64/ros-kilted-xacro-2.1.1-np2py312h61f2ce4_19.conda
   sha256: caefd7e02566d97b99541b0e8178127b83cf13655a416e02f58ba12e7feefa76
   md5: 4fcf95b3d4db8744af150bb04d971fcc
