@@ -27,7 +27,7 @@ version = "*"
 mode = "pixi-native"
 build-type = "ament_python"
 distro = "kilted"
-build-number = 1
+build-number = 2
 
 [package.host-dependencies]
 python = "*"
