@@ -16,6 +16,5 @@ jobs:
     with:
       package: ${{ github.event.inputs.package }}
       public: true
-      build_jazzy: true
     secrets:
       token: ${{ secrets.API_TOKEN_GITHUB }}
