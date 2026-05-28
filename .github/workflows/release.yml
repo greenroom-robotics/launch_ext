@@ -7,7 +7,6 @@ on:
         type: choice
         description: 'If not specified, all packages will be released.'
         options:
-          - ""
           - launch_ext
 
 jobs:
