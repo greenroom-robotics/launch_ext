@@ -15,5 +15,6 @@ jobs:
     with:
       package: ${{ github.event.inputs.package }}
       public: true
+      build_iron: true
     secrets:
       token: ${{ secrets.API_TOKEN_GITHUB }}
