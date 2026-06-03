@@ -22,6 +22,8 @@ from launch.action import Action
 from launch.launch_context import LaunchContext
 from launch.substitution import Substitution
 
+from launch.launch_description_entity import LaunchDescriptionEntity
+
 
 class FastDDSProfileSubstitution(Substitution):
     """Substitution that renders a FastDDS profile XML from a Jinja2 template."""
@@ -37,18 +39,16 @@ class FastDDSProfileSubstitution(Substitution):
         self.allowed_interfaces = allowed_interfaces
 
     def perform(self, context):
-        config_dir = PathJoinSubstitution(
-            [FindPackageShare("launch_ext"), "config"]
-        ).perform(context)
+        config_dir = PathJoinSubstitution([FindPackageShare("launch_ext"), "config"]).perform(
+            context
+        )
         env = Environment(
             loader=FileSystemLoader(config_dir),
             keep_trailing_newline=True,
         )
         template = env.get_template("fastdds_profile.xml.j2")
 
-        interfaces = [
-            ResolveHost(iface).perform(context) for iface in self.allowed_interfaces
-        ]
+        interfaces = [ResolveHost(iface).perform(context) for iface in self.allowed_interfaces]
         discovery_server_ip = ResolveHost(self.discovery_server_ip).perform(context)
         launch_log_dir = LaunchConfiguration("launch_log_dir").perform(context)
         return template.render(
@@ -106,10 +106,11 @@ class ConfigureFastDDS(Action):
         if allowed_interfaces is None:
             allowed_interfaces = []
 
+        self.discovery_server: ExecuteProcess | None = None
+
         fastdds_profile_path = LaunchConfiguration(
             "fastdds_profile_path",
-            default=fastdds_profile_path
-            or f"{pathlib.Path.home()}/fastdds_profile.xml",
+            default=fastdds_profile_path or f"{pathlib.Path.home()}/fastdds_profile.xml",
         )
         fastdds_profile_super_client_path = LaunchConfiguration(
             "fastdds_profile_super_client_path",
@@ -129,19 +130,6 @@ class ConfigureFastDDS(Action):
                 allowed_interfaces=allowed_interfaces,
             ),
             LaunchConfiguration("fastdds_server_profile"),
-        )
-
-        discovery_server = ExecuteProcess(
-            name="discovery_server",
-            cmd=[
-                "fastdds",
-                "discovery",
-                "-i",
-                "0",
-                "-x",
-                LaunchConfiguration("fastdds_server_profile"),
-            ],
-            output={"stderr": ["screen", "log"], "both": ["own_log"]},
         )
 
         # Create the standard Fast DDS profile (CLIENT or SIMPLE mode)
@@ -171,9 +159,7 @@ class ConfigureFastDDS(Action):
             SetLaunchConfiguration(
                 "fastdds_profile_super_client", fastdds_profile_super_client_path
             ),
-            SetLaunchConfiguration(
-                "fastdds_server_profile", fastdds_server_profile_path
-            ),
+            SetLaunchConfiguration("fastdds_server_profile", fastdds_server_profile_path),
             # Write the configuration files
             write_fastdds_profile,
             write_fastdds_profile_super_client,
@@ -186,23 +172,22 @@ class ConfigureFastDDS(Action):
         ]
 
         if with_discovery_server:
-            self.actions.append(discovery_server)
+            discovery_server_id = "0"
 
-    def execute(self, context: LaunchContext) -> None:
-        """
-        Execute all configured actions in sequence.
+            self.discovery_server = ExecuteProcess(
+                name="discovery_server",
+                cmd=[
+                    "fast-discovery-server",
+                    "42",  # 42 means start server, run this directly so SIGINT works properly to shut it down
+                    "-i",
+                    discovery_server_id,
+                    "-x",
+                    LaunchConfiguration("fastdds_server_profile"),
+                ],
+                output={"both": ["screen", "log"]},
+            )
 
-        This method is called by the launch system when the action is executed.
-        It iterates through all the actions created during initialization and
-        executes them in order.
+            self.actions.append(self.discovery_server)
 
-        Args:
-            context (LaunchContext): The launch context
-
-        Returns:
-            None
-        """
-        for action in self.actions:
-            action.execute(context)
-
-        return None
+    def execute(self, context: LaunchContext) -> list[LaunchDescriptionEntity]:
+        return self.actions

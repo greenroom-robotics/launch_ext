@@ -3,7 +3,6 @@
 Extended functionality for ROS 2 launch system providing additional actions, substitutions, and conditions.
 
 ### Supported Distros
-- Jazzy
 - Kilted
 
 ## Table of Contents

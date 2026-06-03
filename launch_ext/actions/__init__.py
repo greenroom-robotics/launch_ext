@@ -16,7 +16,8 @@ from .configure_fastdds import ConfigureFastDDS
 from .configure_fastdds_easy import ConfigureFastDDSEasyMode
 from .configure_zenoh import ConfigureZenoh
 from .configure_avahi import ConfigureAvahi, AvahiProductService
-from .run_after_process_output import RunAfterProcessOutput
+from .execute_after_process_output import ExecuteAfterProcessOutput
+from .execute_and_after_process_exit import ExecuteAndAfterProcessExit
 
 from .execute_local import ExecuteLocalExt
 from .execute_process import ExecuteProcessExt
@@ -39,5 +40,6 @@ __all__ = [
     "ConfigureZenoh",
     "ConfigureAvahi",
     "AvahiProductService",
-    "RunAfterProcessOutput",
+    "ExecuteAfterProcessOutput",
+    "ExecuteAndAfterProcessExit",
 ]
