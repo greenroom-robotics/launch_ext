@@ -32,7 +32,7 @@ setup(
     description="Some extras for `launch` tooling.",
     long_description=("Some extras for `launch` tooling."),
     license="MIT",
-    tests_require=["pytest"],
+    extras_require={"test": ["pytest"]},
     entry_points={
         "launch.frontend.launch_extension": [
             "launch_ext = launch_ext",

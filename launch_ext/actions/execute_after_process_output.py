@@ -1,17 +1,16 @@
-"""Module for the RunAfterProcessOutput action."""
+"""Module for the ExecuteAfterProcessOutput action."""
 
 from typing import Iterable
 
 import launch.logging
 from launch.action import Action
-from launch.actions import RegisterEventHandler
+from launch.actions import RegisterEventHandler, ExecuteProcess
 from launch.event_handlers import OnProcessIO
 from launch.launch_context import LaunchContext
 from launch.launch_description_entity import LaunchDescriptionEntity
-from launch.actions import ExecuteProcess
 
 
-class RunAfterProcessOutput(Action):
+class ExecuteAfterProcessOutput(Action):
     """Defer a list of actions until a target process emits a matching stdout line.
 
     The wrapped actions are visited by the launch system the first time
@@ -40,7 +39,7 @@ class RunAfterProcessOutput(Action):
         if self._match in info.text:
             self._fired = True
             self._logger.info(
-                f"RunAfterProcessOutput matched {self._match!r}; running {len(self._then)} deferred action(s)"
+                f"ExecuteAfterProcessOutput matched {self._match!r}; running {len(self._then)} deferred action(s)"
             )
             return self._then
         return None

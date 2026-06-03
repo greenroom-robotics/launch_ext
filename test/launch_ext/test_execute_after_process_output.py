@@ -4,7 +4,7 @@ from launch import LaunchContext
 from launch.actions import ExecuteProcess, RegisterEventHandler
 from launch.event_handlers import OnProcessIO
 
-from launch_ext.actions import RunAfterProcessOutput
+from launch_ext.actions import ExecuteAfterProcessOutput
 
 
 def _io(text: bytes) -> SimpleNamespace:
@@ -12,9 +12,9 @@ def _io(text: bytes) -> SimpleNamespace:
     return SimpleNamespace(text=text)
 
 
-def _make_action(match: bytes, then: list) -> RunAfterProcessOutput:
+def _make_action(match: bytes, then: list) -> ExecuteAfterProcessOutput:
     target = ExecuteProcess(cmd=["true"])
-    return RunAfterProcessOutput(target=target, match=match, then=then)
+    return ExecuteAfterProcessOutput(target=target, match=match, then=then)
 
 
 def test_match_returns_then_actions():
@@ -67,7 +67,7 @@ def test_empty_then_still_fires():
 def test_execute_registers_on_process_io_handler():
     target = ExecuteProcess(cmd=["true"])
     then = [ExecuteProcess(cmd=["echo"])]
-    action = RunAfterProcessOutput(target=target, match=b"ready", then=then)
+    action = ExecuteAfterProcessOutput(target=target, match=b"ready", then=then)
 
     entities = action.execute(LaunchContext())
 

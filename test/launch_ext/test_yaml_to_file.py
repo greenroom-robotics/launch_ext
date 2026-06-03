@@ -20,9 +20,7 @@ def test_file_contents():
     sub = YAMLToFile(config)
     p = sub.perform(lc)
     print(p)
-    assert (
-        Path(p).read_text()
-        == """asdf: moo
+    assert Path(p).read_text() == """asdf: moo
 baz:
   asdf: moo
   foo: bar
@@ -33,6 +31,5 @@ list:
 - foo
 - bar
 """
-    )
     # This doesn't work well at all
     # assert sub.describe() == "YAMLToFile(config={'asdf': 'moo', 'hello': LaunchConfiguration('test_sub'), 'baz': {'asdf': 'moo', 'foo': 'bar'}, 'list': ['asdf', 'moo', 'foo', 'bar']})"

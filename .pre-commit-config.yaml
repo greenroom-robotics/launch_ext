@@ -15,7 +15,7 @@
 repos:
   # Standard hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -32,19 +32,19 @@ repos:
 
   # Python hooks
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.32.1
+    rev: v3.21.2
     hooks:
     -   id: pyupgrade
         args: [--py38-plus, --keep-runtime-typing]
 
   - repo: https://github.com/psf/black
-    rev: 22.3.0
+    rev: 26.5.1
     hooks:
       - id: black
         args: ["--line-length=99"]
 
   - repo: https://github.com/pycqa/flake8
-    rev: 7.1.0
+    rev: 7.3.0
     hooks:
     - id: flake8
       args: ["--ignore=E203, E266, E501, W503, F403, F401 --max-line-length = 99"]
@@ -95,7 +95,7 @@ repos:
 
   # Spellcheck in comments and docs
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.1.0
+    rev: v2.4.2
     hooks:
       - id: codespell
         name: codespell
