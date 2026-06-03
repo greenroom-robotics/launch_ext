@@ -1,0 +1,6 @@
+[[rule]]
+name = "pixi-schema"
+include = ["**/pixi.toml"]
+
+[rule.schema]
+path = "https://raw.githubusercontent.com/prefix-dev/pixi/main/schema/schema.json"
