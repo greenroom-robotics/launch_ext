@@ -5,12 +5,19 @@ from launch.substitutions import (
 )
 from launch_ros.substitutions import FindPackageShare
 from launch.action import Action
-from launch.actions import OpaqueFunction, SetEnvironmentVariable
+from launch.actions import (
+    ExecuteProcess,
+    OpaqueFunction,
+    RegisterEventHandler,
+    SetEnvironmentVariable,
+)
+from launch.event_handlers import OnProcessStart
+from launch.events.process import ProcessStarted
 from launch.launch_context import LaunchContext
 from launch_ros.actions import Node
 import json
 import launch.logging
-from typing import Optional
+from typing import List, Optional
 
 
 def deep_merge(base: dict, override: dict) -> dict:
@@ -173,6 +180,24 @@ class ConfigureZenoh(Action):
                 package="rmw_zenoh_cpp",
                 executable="rmw_zenohd",
                 output="both",
+            )
+
+            def renice_router(
+                event: ProcessStarted, _context: LaunchContext
+            ) -> List[ExecuteProcess]:
+                return [
+                    ExecuteProcess(
+                        cmd=["sudo", "renice", "-n", "-20", "-p", str(event.pid)],
+                        name="renice_zenoh_router",
+                        output="both",
+                    )
+                ]
+
+            # Renice the router process once it has started
+            self.actions.append(
+                RegisterEventHandler(
+                    OnProcessStart(target_action=zenoh_router, on_start=renice_router)
+                )
             )
             self.actions.append(zenoh_router)
 
