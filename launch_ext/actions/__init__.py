@@ -21,6 +21,7 @@ from .execute_and_after_process_exit import ExecuteAndAfterProcessExit
 
 from .execute_local import ExecuteLocalExt
 from .execute_process import ExecuteProcessExt
+from .staggered_execute import StaggeredExecute
 
 __all__ = [
     "LogRotate",
@@ -42,4 +43,5 @@ __all__ = [
     "AvahiProductService",
     "ExecuteAfterProcessOutput",
     "ExecuteAndAfterProcessExit",
+    "StaggeredExecute",
 ]
