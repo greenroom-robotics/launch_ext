@@ -41,7 +41,7 @@ def configure_middleware(
                 generate_router_config_file=True,
                 generate_session_config_file=True,
             ),
-            then,
+            *then,
         ]
 
     if discovery.type == "fastdds":
@@ -106,5 +106,5 @@ def configure_middleware(
             allowed_interfaces=[],
             simple_discovery=True,
         ),
-        then,
+        *then,
     ]
