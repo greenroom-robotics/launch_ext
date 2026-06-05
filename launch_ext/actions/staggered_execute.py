@@ -35,9 +35,7 @@ class StaggeredExecute(Action):
         self._interval = interval
         self._staggered = self._build(list(entities))
 
-    def _build(
-        self, entities: List[LaunchDescriptionEntity]
-    ) -> List[LaunchDescriptionEntity]:
+    def _build(self, entities: List[LaunchDescriptionEntity]) -> List[LaunchDescriptionEntity]:
         result: List[LaunchDescriptionEntity] = []
         process_index = 0
         for entity in entities:
@@ -45,8 +43,9 @@ class StaggeredExecute(Action):
                 if process_index == 0:
                     result.append(entity)  # first process: synchronous, unwrapped
                 else:
-                    result.append(TimerAction(
-                        period=process_index * self._interval, actions=[entity]))
+                    result.append(
+                        TimerAction(period=process_index * self._interval, actions=[entity])
+                    )
                 process_index += 1
             else:
                 result.append(entity)  # passthrough, fires immediately
