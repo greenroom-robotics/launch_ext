@@ -1,5 +1,8 @@
 from launch.actions import SetLaunchConfiguration, ExecuteProcess
 from launch.launch_description_entity import LaunchDescriptionEntity
+from launch.some_entities_type import SomeEntitiesType
+from launch.utilities import normalize_to_list_of_entities
+
 
 from launch_ext.actions.configure_zenoh import deep_merge
 from launch_ext.discovery.discovery_config import Discovery
@@ -14,9 +17,9 @@ from launch_ext.actions.execute_and_after_process_exit import ExecuteAndAfterPro
 def configure_middleware(
     discovery: Discovery,
     with_server=True,
-    then: list[LaunchDescriptionEntity] | None = None,
-):
-    then = list(then) if then else []
+    then: SomeEntitiesType | None = None,
+) -> list[LaunchDescriptionEntity]:
+    then = normalize_to_list_of_entities([then])
 
     if discovery.type == "zenoh":
         zenoh = discovery.zenoh
@@ -41,8 +44,7 @@ def configure_middleware(
                 generate_router_config_file=True,
                 generate_session_config_file=True,
             ),
-            *then,
-        ]
+        ] + then
 
     if discovery.type == "fastdds":
         fastdds = discovery.fastdds
@@ -97,7 +99,7 @@ def configure_middleware(
             ConfigureFastDDSEasyMode(
                 easy_mode_base_address=discovery.easy.base_address,
             ),
-        ]
+        ] + then
 
     return [
         ConfigureFastDDS(
@@ -106,5 +108,4 @@ def configure_middleware(
             allowed_interfaces=[],
             simple_discovery=True,
         ),
-        *then,
-    ]
+    ] + then
