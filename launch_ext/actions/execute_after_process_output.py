@@ -11,6 +11,7 @@ from launch.some_entities_type import SomeEntitiesType
 
 from launch.launch_description_entity import LaunchDescriptionEntity
 
+
 class ExecuteAfterProcessOutput(Action):
     """Defer action[s] until a target process emits a matching stdout line.
 
@@ -52,6 +53,6 @@ class ExecuteAfterProcessOutput(Action):
 
     def execute(self, context: LaunchContext) -> List[LaunchDescriptionEntity]:
         evt_handler = RegisterEventHandler(
-                OnProcessIO(target_action=self._target, on_stdout=self._on_stdout)
+            OnProcessIO(target_action=self._target, on_stdout=self._on_stdout)
         )
         return [evt_handler]

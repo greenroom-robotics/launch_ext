@@ -27,10 +27,10 @@ def test_non_process_entity_passes_through_and_does_not_advance_index():
     log = LogInfo(msg="hello")
     subs = StaggeredExecute([p0, log, p1], interval=2.0).get_sub_entities()
 
-    assert subs[0] is p0            # first process, unwrapped
-    assert subs[1] is log           # passthrough, unchanged
+    assert subs[0] is p0  # first process, unwrapped
+    assert subs[1] is log  # passthrough, unchanged
     assert isinstance(subs[2], TimerAction)
-    assert subs[2].period == 2.0    # second process still at 1 * interval
+    assert subs[2].period == 2.0  # second process still at 1 * interval
     assert list(subs[2].actions) == [p1]
 
 
