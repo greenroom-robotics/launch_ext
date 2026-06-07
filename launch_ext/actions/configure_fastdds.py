@@ -3,6 +3,11 @@ import pathlib
 
 from jinja2 import Environment, FileSystemLoader
 
+from launch.action import Action
+from launch.launch_context import LaunchContext
+from launch.substitution import Substitution
+from launch.launch_description_entity import LaunchDescriptionEntity
+
 from launch.actions import (
     ExecuteProcess,
     SetLaunchConfiguration,
@@ -11,6 +16,7 @@ from launch.actions import (
 from launch.substitutions import (
     PathJoinSubstitution,
     LaunchConfiguration,
+    LaunchLogDir
 )
 from launch_ros.substitutions import FindPackageShare
 from launch_ext.actions import WriteFile
@@ -18,11 +24,6 @@ from launch_ext.substitutions import (
     ResolveHost,
     get_fastdds_default_profile_env_var,
 )
-from launch.action import Action
-from launch.launch_context import LaunchContext
-from launch.substitution import Substitution
-
-from launch.launch_description_entity import LaunchDescriptionEntity
 
 
 class FastDDSProfileSubstitution(Substitution):
@@ -50,7 +51,8 @@ class FastDDSProfileSubstitution(Substitution):
 
         interfaces = [ResolveHost(iface).perform(context) for iface in self.allowed_interfaces]
         discovery_server_ip = ResolveHost(self.discovery_server_ip).perform(context)
-        launch_log_dir = LaunchConfiguration("launch_log_dir").perform(context)
+        launch_log_dir = LaunchLogDir().perform(context)
+
         return template.render(
             discovery_protocol=self.discovery_protocol,
             discovery_server_ip=discovery_server_ip,
