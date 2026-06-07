@@ -19,7 +19,7 @@ def configure_middleware(
     with_server=True,
     then: SomeEntitiesType | None = None,
 ) -> list[LaunchDescriptionEntity]:
-    then = normalize_to_list_of_entities([then])
+    then = normalize_to_list_of_entities([then] if then else [])
 
     if discovery.type == "zenoh":
         zenoh = discovery.zenoh
