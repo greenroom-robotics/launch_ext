@@ -3,23 +3,36 @@
 Extended functionality for ROS 2 launch system providing additional actions, substitutions, and conditions.
 
 ### Supported Distros
-- Iron
-- Jazzy
 - Kilted
 
 ## Table of Contents
 
-- [Actions](#actions)
-  - [ExecuteProcessExt](#executeprocessext)
-  - [IncludePackageLaunchFile](#includepackagelaunchfile)
-  - [LogRotate](#logrotate)
-  - [MakeDeviceNode](#makedevicenode)
-  - [SetLaunchConfigurationIfNotNone](#setlaunchconfigurationifnotnone)
-  - [WriteFile](#writefile)
-  - [Git Repository Actions](#git-repository-actions)
-  - [Middleware Configuration](#middleware-configuration)
-- [Conditions](#conditions)
-- [Substitutions](#substitutions)
+- [launch\_ext - Launch Extensions](#launch_ext---launch-extensions)
+    - [Supported Distros](#supported-distros)
+  - [Table of Contents](#table-of-contents)
+  - [Actions](#actions)
+    - [ExecuteProcessExt](#executeprocessext)
+    - [IncludePackageLaunchFile](#includepackagelaunchfile)
+    - [LogRotate](#logrotate)
+    - [MakeDeviceNode](#makedevicenode)
+    - [SetLaunchConfigurationIfNotNone](#setlaunchconfigurationifnotnone)
+    - [WriteFile](#writefile)
+    - [Git Repository Actions](#git-repository-actions)
+      - [LogRepoInfo](#logrepoinfo)
+      - [VerifyRepoCommit](#verifyrepocommit)
+      - [VerifyRepoClean](#verifyrepoclean)
+    - [Middleware Configuration](#middleware-configuration)
+      - [ConfigureZenoh](#configurezenoh)
+      - [ConfigureFastDDS](#configurefastdds)
+  - [Conditions](#conditions)
+    - [EnumEqual](#enumequal)
+  - [Substitutions](#substitutions)
+    - [Templated](#templated)
+    - [Unary](#unary)
+    - [WriteTempFile](#writetempfile)
+    - [YAMLToFile / YamlToJson](#yamltofile--yamltojson)
+    - [ResolveHost](#resolvehost)
+    - [Xacro](#xacro)
 
 ## Actions
 

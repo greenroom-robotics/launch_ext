@@ -1,11 +1,26 @@
-from launch.actions import SetLaunchConfiguration
+from launch.actions import SetLaunchConfiguration, ExecuteProcess
+from launch.launch_description_entity import LaunchDescriptionEntity
+from launch.some_entities_type import SomeEntitiesType
+from launch.utilities import normalize_to_list_of_entities
 
-from launch_ext.actions import ConfigureFastDDS, ConfigureZenoh, ConfigureFastDDSEasyMode
+
 from launch_ext.actions.configure_zenoh import deep_merge
 from launch_ext.discovery.discovery_config import Discovery
 
+from launch_ext.actions.configure_fastdds import ConfigureFastDDS
+from launch_ext.actions.configure_fastdds_easy import ConfigureFastDDSEasyMode
+from launch_ext.actions.configure_zenoh import ConfigureZenoh
+from launch_ext.actions.execute_after_process_output import ExecuteAfterProcessOutput
+from launch_ext.actions.execute_and_after_process_exit import ExecuteAndAfterProcessExit
 
-def configure_middleware(discovery: Discovery, with_server=True):
+
+def configure_middleware(
+    discovery: Discovery,
+    with_server=True,
+    then: SomeEntitiesType | None = None,
+) -> list[LaunchDescriptionEntity]:
+    then = normalize_to_list_of_entities([then] if then else [])
+
     if discovery.type == "zenoh":
         zenoh = discovery.zenoh
         router_peers = zenoh.router_peers
@@ -29,25 +44,62 @@ def configure_middleware(discovery: Discovery, with_server=True):
                 generate_router_config_file=True,
                 generate_session_config_file=True,
             ),
-        ]
+        ] + then
 
     if discovery.type == "fastdds":
         fastdds = discovery.fastdds
-        return [
-            ConfigureFastDDS(
-                with_discovery_server=fastdds.with_discovery_server and with_server,
-                discovery_server_ip=fastdds.discovery_server_ip,
-                allowed_interfaces=fastdds.allowed_interfaces,
-                simple_discovery=False,
-            ),
-        ]
+
+        cfg = ConfigureFastDDS(
+            with_discovery_server=fastdds.with_discovery_server and with_server,
+            discovery_server_ip=fastdds.discovery_server_ip,
+            allowed_interfaces=fastdds.allowed_interfaces,
+            simple_discovery=False,
+        )
+
+        stop_ros2_daemon = ExecuteProcess(
+            name="stop_ros2_daemon",
+            cmd=[
+                "ros2",
+                "daemon",
+                "stop",
+            ],
+            output={"both": ["log", "screen"]},
+        )
+
+        shm_clean = ExecuteProcess(
+            name="shm_clean",
+            cmd=[
+                "fastdds",
+                "shm",
+                "clean",
+            ],
+            output={"both": ["log", "screen"]},
+        )
+
+        after_actions = then
+
+        if cfg.discovery_server:
+            after_actions = [
+                ExecuteAfterProcessOutput(
+                    target=cfg.discovery_server,
+                    match=b"Running on:",
+                    then=then,
+                ),
+                cfg,
+            ]
+        else:
+            after_actions = [cfg] + after_actions
+
+        return ExecuteAndAfterProcessExit(
+            stop_ros2_daemon, ExecuteAndAfterProcessExit(shm_clean, after_actions)
+        )
 
     if discovery.type == "easy":
         return [
             ConfigureFastDDSEasyMode(
                 easy_mode_base_address=discovery.easy.base_address,
             ),
-        ]
+        ] + then
 
     return [
         ConfigureFastDDS(
@@ -56,4 +108,4 @@ def configure_middleware(discovery: Discovery, with_server=True):
             allowed_interfaces=[],
             simple_discovery=True,
         ),
-    ]
+    ] + then

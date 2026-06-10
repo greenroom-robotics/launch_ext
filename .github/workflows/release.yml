@@ -7,7 +7,6 @@ on:
         type: choice
         description: 'If not specified, all packages will be released.'
         options:
-          - ""
           - launch_ext
 
 jobs:
@@ -16,6 +15,6 @@ jobs:
     with:
       package: ${{ github.event.inputs.package }}
       public: true
-      build_jazzy: true
+      build_iron: true
     secrets:
       token: ${{ secrets.API_TOKEN_GITHUB }}

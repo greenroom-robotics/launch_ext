@@ -1,9 +1,8 @@
 """Module for the YamlToJson substitution."""
 
 import json
-import yaml
-from typing import Text
 
+import yaml
 from launch.launch_context import LaunchContext
 from launch.substitution import Substitution
 
@@ -24,7 +23,9 @@ class YamlToJson(Substitution):
 
     def describe(self) -> str:
         """Return a description of this substitution as a string."""
-        return f"YamlToJson(file_content={self.file_content_substitution.describe()}, quote_output={self.quote_output})"
+        sub = self.file_content_substitution
+        sub_desc = f"{type(sub).__name__}({sub.describe()})"
+        return f"YamlToJson(file_content={sub_desc}, quote_output={self.quote_output})"
 
     def perform(self, context: LaunchContext) -> str:
         """Convert YAML content to JSON string."""
@@ -35,5 +36,3 @@ class YamlToJson(Substitution):
             return f"'{json_output}'" if self.quote_output else json_output
         except yaml.YAMLError as e:
             raise ValueError(f"Failed to parse YAML content: {e}")
-        except json.JSONEncodeError as e:
-            raise ValueError(f"Failed to encode JSON: {e}")
