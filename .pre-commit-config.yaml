@@ -104,4 +104,4 @@ repos:
         language: python
         types: [text]
         args: ['--ignore-words=.codespell-ignore-words.txt', '--write-changes']
-        exclude: \.(svg|pyc)$
+        exclude: (\.(svg|pyc)$|(^|/)pixi\.lock$)

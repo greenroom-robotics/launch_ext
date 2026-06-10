@@ -1,0 +1,28 @@
+{
+  "name": "launch_ext (ROS 2 Kilted)",
+  "build": {
+    "dockerfile": "../../Dockerfile",
+    "context": "../..",
+    "args": {
+      "ROS_DISTRO": "kilted"
+    }
+  },
+  "workspaceFolder": "/ros_ws/src/launch_ext",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/ros_ws/src/launch_ext,type=bind,consistency=cached",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-iot.vscode-ros",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.terminal.activateEnvironment": false
+      }
+    }
+  },
+  "runArgs": ["--network=host"]
+}
