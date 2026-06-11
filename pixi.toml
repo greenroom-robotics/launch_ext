@@ -1,7 +1,7 @@
 [workspace]
 name = "launch-ext"
 channels = [
-  "http://localhost:8000",
+  "http://localhost:12222/general",
   "https://prefix.dev/robostack-kilted",
   "https://prefix.dev/conda-forge",
 ]
@@ -10,36 +10,56 @@ preview = ["pixi-build"]
 
 [dependencies]
 launch-ext = { path = "." }
-mise = "*"
+mise       = "*"
 
 [package]
-name = "launch-ext"
-version = "1.22.3"
+name        = "launch-ext"
+version     = "1.22.3"
 description = "Some extras for launch tooling."
-license = "MIT"
-authors = ["Russ Webber <russ.webber@greenroomrobotics.com>"]
+license     = "MIT"
+authors     = ["Russ Webber <russ.webber@greenroomrobotics.com>"]
 
 [package.build.backend]
-name = "pixi-build-ros-gr"
-version = "*"
+name    = "pixi-build-ros-gr"
+version = ">=0.4,<0.5"
 
 [package.build.config]
-mode = "pixi-native"
-build-type = "ament_python"
-distro = "kilted"
+mode         = "pixi-native"
+build-type   = "ament_python"
+distro       = "kilted"
 build-number = 2
 
 [package.host-dependencies]
 python = "*"
-hatchling = "*"
 
 [package.run-dependencies]
-python = "*"
-ros-kilted-launch = "*"
-ros-kilted-launch-ros = "*"
+python                        = "*"
+ros-kilted-launch             = "*"
+ros-kilted-launch-ros         = "*"
 ros-kilted-example-interfaces = "*"
-ros-kilted-xacro = "*"
-psutil = ">=5,<8"
-jinja2 = ">=3.1,<4"
-gitpython = ">=3.1,<4"
-dbus-python = "*"
+ros-kilted-xacro              = "*"
+psutil                        = ">=5,<8"
+jinja2                        = ">=3.1,<4"
+gitpython                     = ">=3.1,<4"
+dbus-python                   = "*"
+
+# Test env builds the package from source with colcon (deb parity),
+# so it needs the build (host) deps as well as the test deps.
+[feature.tests.dependencies]
+python                        = "*"
+ros-kilted-launch             = "*"
+ros-kilted-launch-ros         = "*"
+ros-kilted-example-interfaces = "*"
+ros-kilted-xacro              = "*"
+psutil                        = ">=5,<8"
+jinja2                        = ">=3.1,<4"
+gitpython                     = ">=3.1,<4"
+dbus-python                   = "*"
+pytest                        = "*"
+colcon-common-extensions      = "*"
+
+[feature.tests.tasks]
+test = "colcon build && (LD_PRELOAD=$CONDA_PREFIX/lib/libpython3.so colcon test --event-handlers console_direct+ || true) && colcon test-result --all --verbose"
+
+[environments]
+tests = { features = ["tests"], no-default-feature = true }
