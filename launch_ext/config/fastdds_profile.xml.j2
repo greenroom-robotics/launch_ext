@@ -110,6 +110,15 @@
                         </discoveryServersList>
                     </discovery_config>
                 </builtin>
+
+                <propertiesPolicy>
+                    <properties>
+                        <property>
+                            <name>fastdds.type_propagation</name>
+                            <value>disabled</value>
+                        </property>
+                    </properties>
+                </propertiesPolicy>
                 {% endif %}
             </rtps>
         </participant>
