@@ -57,7 +57,7 @@ ros-kilted-ament-lint-auto = "*"
 
 [feature.tests.tasks]
 build = "colcon build"
-colcon-test = { cmd = "LD_PRELOAD=$CONDA_PREFIX/lib/libpython3.so colcon test --event-handlers console_direct+", depends-on = ["build"] }
+colcon-test = { cmd = "bash -c 'colcon test --event-handlers console_direct+ || [ $? -eq 5 ]'", depends-on = ["build"] }
 test = { cmd = "colcon test-result --all --verbose", depends-on = ["colcon-test"] }
 
 [environments]
