@@ -44,23 +44,22 @@ jinja2                        = ">=3.1,<4"
 gitpython                     = ">=3.1,<4"
 dbus-python                   = "*"
 
-# Test env builds the package from source with colcon (deb parity),
-# so it needs the build (host) deps as well as the test deps.
+# Dev environment: build-only tools
+[feature.dev.dependencies]
+colcon-common-extensions = "*"
+pkg-config                = "*"
+python                    = "*"
+
+# Tests environment: extends dev with test/lint deps
 [feature.tests.dependencies]
-python                        = "*"
-ros-kilted-launch             = "*"
-ros-kilted-launch-ros         = "*"
-ros-kilted-example-interfaces = "*"
-ros-kilted-xacro              = "*"
-psutil                        = ">=5,<8"
-jinja2                        = ">=3.1,<4"
-gitpython                     = ">=3.1,<4"
-dbus-python                   = "*"
-pytest                        = "*"
-colcon-common-extensions      = "*"
+pytest                      = "*"
+ros-kilted-ament-lint-auto = "*"
 
 [feature.tests.tasks]
-test = "colcon build && (LD_PRELOAD=$CONDA_PREFIX/lib/libpython3.so colcon test --event-handlers console_direct+ || true) && colcon test-result --all --verbose"
+build = "colcon build"
+colcon-test = { cmd = "LD_PRELOAD=$CONDA_PREFIX/lib/libpython3.so colcon test --event-handlers console_direct+", depends-on = ["build"] }
+test = { cmd = "colcon test-result --all --verbose", depends-on = ["colcon-test"] }
 
 [environments]
-tests = { features = ["tests"], no-default-feature = true }
+dev = { features = ["dev"] }
+tests = { features = ["dev", "tests"] }
