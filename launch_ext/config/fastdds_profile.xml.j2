@@ -81,6 +81,7 @@
                 </builtin>
                 {% elif discovery_protocol not in ["SIMPLE", "SERVER"] %}
                 <builtin>
+                    <mutation_tries>1000</mutation_tries>
                     <discovery_config>
                         <discoveryProtocol>{{ discovery_protocol }}</discoveryProtocol>
                         <discoveryServersList>
