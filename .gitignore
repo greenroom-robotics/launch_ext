@@ -2,3 +2,4 @@ log
 build
 install
 .mypy_cache
+__pycache__
