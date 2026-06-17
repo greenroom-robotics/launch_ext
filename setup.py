@@ -37,5 +37,10 @@ setup(
         "launch.frontend.launch_extension": [
             "launch_ext = launch_ext",
         ],
+        "ros2launch.option": [
+            "relative_latest_symlink ="
+            " launch_ext.ros2launch_options.relative_latest_symlink"
+            ":RelativeLatestSymlinkOption",
+        ],
     },
 )
