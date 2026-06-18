@@ -44,14 +44,11 @@ jinja2                        = ">=3.1,<4"
 gitpython                     = ">=3.1,<4"
 dbus-python                   = "*"
 
-# Dev environment: build-only tools
-[feature.dev.dependencies]
-colcon-common-extensions = "*"
-pkg-config                = "*"
-python                    = "*"
-
-# Tests environment: extends dev with test/lint deps
+# Tests environment: build and test/lint deps
 [feature.tests.dependencies]
+ros-dev-tools-meta          = "*"
+pkg-config                  = "*"
+python                      = "*"
 pytest                      = "*"
 ros-kilted-ament-lint-auto = "*"
 
@@ -61,5 +58,4 @@ colcon-test = { cmd = "bash -c 'colcon test --event-handlers console_direct+ || 
 test = { cmd = "colcon test-result --all --verbose", depends-on = ["colcon-test"] }
 
 [environments]
-dev = { features = ["dev"] }
-tests = { features = ["dev", "tests"] }
+tests = { features = ["tests"] }
