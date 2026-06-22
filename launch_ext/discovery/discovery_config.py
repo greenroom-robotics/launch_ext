@@ -1,27 +1,40 @@
+from six.moves.builtins import list
 from typing import Literal
 from pydantic import BaseModel
 from pydantic.fields import Field
 
 
-class DiscoverySimple(BaseModel):
-    own_ip: str = Field(
-        default="0.0.0.0",
-        description="IP/host/interface address of the primary network interface. This is where DDS traffic will route to.",
+class IPEndPoint(BaseModel):
+    address: str = Field(
+        description="IP address or hostname",
     )
+    port: int = Field(
+        description="Port number",
+    )
+
+
+class FastDDSDiscoveryType(str):
+    SIMPLE = "simple"
+    DISCOVERY_SERVER = "discovery_server"
+    EASY = "easy"
 
 
 class DiscoveryFastDDS(BaseModel):
-    with_discovery_server: bool = Field(
+    discovery_type: Literal["simple", "discovery_server", "easy"] = Field(
+        default="discovery_server",
+        description="Discovery mechanism to use: 'simple', 'discovery_server', or 'easy'.",
+    )
+    run_discovery_server: bool = Field(
         default=True,
-        description="Run the discovery server. It will bind to 0.0.0.0:11811",
+        description="Run the discovery server.",
     )
-    discovery_server_ip: str = Field(
-        default="0.0.0.0",
-        description="IP/host/interface of the discovery server. Assumes port of 11811",
-    )
-    allowed_interfaces: list[str] = Field(
+    external_interfaces: list[str] = Field(
         default_factory=list,
-        description="List of IP/host/interface addresses to allow. First is used as primary. Empty means all interfaces.",
+        description="List of IP/host/interface addresses for connections to external networks.",
+    )
+    external_discovery_servers: list[IPEndPoint] = Field(
+        default_factory=list,
+        description="IP/host/interface of the discovery server.",
     )
 
 
@@ -35,25 +48,14 @@ class DiscoveryZenoh(BaseModel):
     session_config: dict = Field(default_factory=dict, description="Session config overrides")
 
 
-class DiscoveryEasy(BaseModel):
-    base_address: str = Field(
-        default="127.0.0.1",
-        description="Base address for easy discovery",
-    )
-
-
 class Discovery(BaseModel):
-    type: Literal["simple", "fastdds", "zenoh", "easy"] = Field(
+    middleware: Literal["fastdds", "zenoh"] = Field(
         default="zenoh",
-        description="Discovery mechanism to use: 'simple', 'fastdds', 'zenoh', or 'easy'",
+        description="Middleware to use: 'fastdds' or 'zenoh'",
     )
     ros_domain_id: int = Field(
         default=0,
         description="ROS domain ID",
-    )
-    simple: DiscoverySimple = Field(
-        default_factory=DiscoverySimple,
-        description="Configuration for simple discovery",
     )
     fastdds: DiscoveryFastDDS = Field(
         default_factory=DiscoveryFastDDS,
@@ -62,8 +64,4 @@ class Discovery(BaseModel):
     zenoh: DiscoveryZenoh = Field(
         default_factory=DiscoveryZenoh,
         description="Configuration for Zenoh discovery",
-    )
-    easy: DiscoveryEasy = Field(
-        default_factory=DiscoveryEasy,
-        description="Configuration for easy discovery",
     )

@@ -18,6 +18,8 @@ from .fastdds_superclient_environment import (
 )
 from .fastdds_client_environment import FastDDSClientEnvironment, get_fastdds_client_environment
 from .fastdds_env_var import FastDDSEnvVar, get_fastdds_default_profile_env_var
+from .fastdds_profile import FastDDSProfile
+
 
 # Alias for consistent naming
 YamlToFile = YAMLToFile
@@ -37,4 +39,5 @@ __all__ = [
     "get_fastdds_client_environment",
     "FastDDSEnvVar",
     "get_fastdds_default_profile_env_var",
+    "FastDDSProfile",
 ]

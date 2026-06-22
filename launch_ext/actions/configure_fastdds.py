@@ -1,68 +1,111 @@
-import os
 import pathlib
-
-from jinja2 import Environment, FileSystemLoader
 
 from launch.action import Action
 from launch.launch_context import LaunchContext
-from launch.substitution import Substitution
 from launch.launch_description_entity import LaunchDescriptionEntity
 
 from launch.actions import (
+    EmitEvent,
     ExecuteProcess,
     SetLaunchConfiguration,
     SetEnvironmentVariable,
 )
 from launch.substitutions import (
-    PathJoinSubstitution,
     LaunchConfiguration,
-    LaunchLogDir
 )
-from launch_ros.substitutions import FindPackageShare
-from launch_ext.actions import WriteFile
+from launch_ext.actions import WriteFile, ExecuteAfterProcessOutput
 from launch_ext.substitutions import (
-    ResolveHost,
+    FastDDSProfile,
     get_fastdds_default_profile_env_var,
 )
+from launch_ext.events import ActionReady
+
+from ..discovery.discovery_config import IPEndPoint
 
 
-class FastDDSProfileSubstitution(Substitution):
-    """Substitution that renders a FastDDS profile XML from a Jinja2 template."""
+DEFAULT_FAST_DISCOVERY_SERVER_PORT = 11811
+
+class FastDDSDiscoveryServer(Action):
+    """
+    Configure Fast DDS Discovery Server with the specified external interfaces and discovery servers, and start the server process.
+    """
 
     def __init__(
         self,
-        discovery_protocol: str,
-        discovery_server_ip: str,
-        allowed_interfaces: list[str],
+        external_interfaces: list[str] | None = None,
+        external_discovery_servers: list[IPEndPoint] | None = None,
+        port: int = DEFAULT_FAST_DISCOVERY_SERVER_PORT,
+        server_id: str = "0",
+        fastdds_profile_path_dir: str | pathlib.Path | None = None,
+        **kwargs,
     ):
-        self.discovery_protocol = discovery_protocol
-        self.discovery_server_ip = discovery_server_ip
-        self.allowed_interfaces = allowed_interfaces
+        """
+        Initialize the FastDDSDiscoveryServer action.
 
-    def perform(self, context):
-        config_dir = PathJoinSubstitution([FindPackageShare("launch_ext"), "config"]).perform(
-            context
-        )
-        env = Environment(
-            loader=FileSystemLoader(config_dir),
-            keep_trailing_newline=True,
-        )
-        template = env.get_template("fastdds_profile.xml.j2")
+        Args:
+            external_interfaces (list[str]): List of interfaces that are expected to be used for cross-host communication. First is used as primary. Empty means only intra-host communication.
+            external_discovery_servers (list[IPEndPoint]): List of external discovery servers to connect to.
+            fastdds_profile_path_dir (str | pathlib.Path): Optional prefix path for the generated Fast DDS profile XML files. If not provided, defaults to the user's home directory.
+            ros_domain_id (int): Optional ROS domain ID to set in the Fast DDS profiles.
+            **kwargs: Additional arguments passed to the parent Action class
+        """
+        super().__init__(**kwargs)
+        if external_interfaces is None:
+            external_interfaces = []
 
-        interfaces = [ResolveHost(iface).perform(context) for iface in self.allowed_interfaces]
-        discovery_server_ip = ResolveHost(self.discovery_server_ip).perform(context)
-        launch_log_dir = LaunchLogDir().perform(context)
+        self.discovery_server: ExecuteProcess | None = None
 
-        return template.render(
-            discovery_protocol=self.discovery_protocol,
-            discovery_server_ip=discovery_server_ip,
-            launch_log_dir=launch_log_dir,
-            interfaces=interfaces,
-            ros_distro=os.environ.get("ROS_DISTRO", "kilted"),
+        fastdds_profile_path_dir = (
+            pathlib.Path(fastdds_profile_path_dir)
+            if fastdds_profile_path_dir
+            else pathlib.Path.home()
         )
 
-    def describe(self):
-        return f"FastDDSProfile({self.discovery_protocol})"
+        fastdds_discovery_server_path = LaunchConfiguration(
+            "fastdds_discovery_server_profile",
+            default=str(fastdds_profile_path_dir / "fastdds_server_profile.xml"),
+        )
+
+        write_fastdds_discovery_server = WriteFile(
+            FastDDSProfile(
+                discovery_protocol="SERVER",
+                local_discovery_server=IPEndPoint(address="127.0.0.1", port=port),
+                external_interfaces=external_interfaces,
+                external_discovery_servers=external_discovery_servers,
+            ),
+            LaunchConfiguration("fastdds_discovery_server_profile"),
+        )
+
+        self.discovery_server = ExecuteProcess(
+            name="discovery_server",
+            cmd=[
+                "fast-discovery-server",
+                "42",  # 42 means start server, run this directly so SIGINT works properly to shut it down
+                "-i",
+                server_id,
+                "-x",
+                LaunchConfiguration("fastdds_discovery_server_profile"),
+            ],
+            output={"both": ["screen", "log"]},
+        )
+
+        ready_emitter = ExecuteAfterProcessOutput(
+            target=self.discovery_server,
+            match=b"Running on:",
+            then=EmitEvent(event=ActionReady(action=self.discovery_server))
+        )
+
+        self.actions = [
+            SetLaunchConfiguration(
+                "fastdds_discovery_server_profile", fastdds_discovery_server_path
+            ),
+            write_fastdds_discovery_server,
+            self.discovery_server,
+            ready_emitter,
+        ]
+
+    def execute(self, context: LaunchContext) -> list[LaunchDescriptionEntity]:
+        return self.actions
 
 
 class ConfigureFastDDS(Action):
@@ -76,120 +119,63 @@ class ConfigureFastDDS(Action):
     The class supports three discovery protocols:
     - SIMPLE: Direct peer-to-peer discovery (standard DDS discovery)
     - CLIENT: Discovery Server client mode (clients connect to a discovery server)
-    - SUPER_CLIENT: Discovery Server super client mode (acts as both client and can distribute discovery info)
+    - SERVER: Discovery Server mode
+
     """
 
     def __init__(
         self,
-        with_discovery_server: bool = False,
-        discovery_server_ip: str = "0.0.0.0",
-        allowed_interfaces: list[str] | None = None,
-        simple_discovery: bool = True,
-        fastdds_profile_path=None,
-        fastdds_profile_super_client_path=None,
+        discovery_protocol: str = "CLIENT",
+        external_interfaces: list[str] | None = None,
+        shm_large_segment: bool = False,
+        ros_domain_id: int | None = None,
+        fastdds_profile_path_dir=None,
         **kwargs,
     ):
         """
         Initialize the ConfigureFastdds action.
 
         Args:
-            with_discovery_server (bool): Whether to start a discovery server process
-            discovery_server_address (str): Address for the discovery server to listen on
-            discovery_server_ip (str): IP address where the discovery server can be reached by clients
-            allowed_interfaces (list[str]): List of IP/host/interface addresses to allow. Empty means all.
-            simple_discovery (bool): If True, use SIMPLE discovery protocol; otherwise use CLIENT/SUPER_CLIENT
             fastdds_profile_path (str, optional): Path where to write the main Fast DDS profile.
                 Defaults to "~/fastdds_profile.xml"
-            fastdds_profile_super_client_path (str, optional): Path where to write the super client profile.
-                Defaults to "~/fastdds_profile_super_client.xml"
             **kwargs: Additional arguments passed to the parent Action class
         """
         super().__init__(**kwargs)
-        if allowed_interfaces is None:
-            allowed_interfaces = []
+        external_interfaces = external_interfaces if external_interfaces is not None else []
 
-        self.discovery_server: ExecuteProcess | None = None
+        fastdds_profile_path_dir = (
+            pathlib.Path(fastdds_profile_path_dir)
+            if fastdds_profile_path_dir
+            else pathlib.Path.home()
+        )
 
-        fastdds_profile_path = LaunchConfiguration(
+        fastdds_local_profile_path = LaunchConfiguration(
             "fastdds_profile_path",
-            default=fastdds_profile_path or f"{pathlib.Path.home()}/fastdds_profile.xml",
-        )
-        fastdds_profile_super_client_path = LaunchConfiguration(
-            "fastdds_profile_super_client_path",
-            default=fastdds_profile_super_client_path
-            or f"{pathlib.Path.home()}/fastdds_profile_super_client.xml",
+            default=str(fastdds_profile_path_dir / "fastdds_profile.xml"),
         )
 
-        # Create the discovery server profile (SERVER mode)
-        fastdds_server_profile_path = LaunchConfiguration(
-            "fastdds_server_profile_path",
-            default=f"{pathlib.Path.home()}/fastdds_profile_server.xml",
-        )
-        write_fastdds_server_profile = WriteFile(
-            FastDDSProfileSubstitution(
-                discovery_protocol="SERVER",
-                discovery_server_ip=discovery_server_ip,
-                allowed_interfaces=allowed_interfaces,
-            ),
-            LaunchConfiguration("fastdds_server_profile"),
-        )
-
-        # Create the standard Fast DDS profile (CLIENT or SIMPLE mode)
-        write_fastdds_profile = WriteFile(
-            FastDDSProfileSubstitution(
-                discovery_protocol="SIMPLE" if simple_discovery else "CLIENT",
-                discovery_server_ip=discovery_server_ip,
-                allowed_interfaces=allowed_interfaces,
+        write_fastdds_local_profile = WriteFile(
+            FastDDSProfile(
+                discovery_protocol=discovery_protocol,
+                external_interfaces=external_interfaces,
+                shm_large_segment=shm_large_segment,
+                ros_domain_id=ros_domain_id,
             ),
             LaunchConfiguration("fastdds_profile"),
-        )
-
-        # Create the super client Fast DDS profile (SUPER_CLIENT mode)
-        write_fastdds_profile_super_client = WriteFile(
-            FastDDSProfileSubstitution(
-                discovery_protocol="SIMPLE" if simple_discovery else "SUPER_CLIENT",
-                discovery_server_ip=discovery_server_ip,
-                allowed_interfaces=allowed_interfaces,
-            ),
-            LaunchConfiguration("fastdds_profile_super_client"),
         )
 
         # Collect all actions to be executed when this Action is executed
         self.actions = [
             # Set launch configurations for profile paths
-            SetLaunchConfiguration("fastdds_profile", fastdds_profile_path),
-            SetLaunchConfiguration(
-                "fastdds_profile_super_client", fastdds_profile_super_client_path
-            ),
-            SetLaunchConfiguration("fastdds_server_profile", fastdds_server_profile_path),
+            SetLaunchConfiguration("fastdds_profile", fastdds_local_profile_path),
             # Write the configuration files
-            write_fastdds_profile,
-            write_fastdds_profile_super_client,
-            write_fastdds_server_profile,
+            write_fastdds_local_profile,
             # Configure environment to use the main profile
             SetEnvironmentVariable(
                 get_fastdds_default_profile_env_var(),
                 LaunchConfiguration("fastdds_profile"),
             ),
         ]
-
-        if with_discovery_server:
-            discovery_server_id = "0"
-
-            self.discovery_server = ExecuteProcess(
-                name="discovery_server",
-                cmd=[
-                    "fast-discovery-server",
-                    "42",  # 42 means start server, run this directly so SIGINT works properly to shut it down
-                    "-i",
-                    discovery_server_id,
-                    "-x",
-                    LaunchConfiguration("fastdds_server_profile"),
-                ],
-                output={"both": ["screen", "log"]},
-            )
-
-            self.actions.append(self.discovery_server)
 
     def execute(self, context: LaunchContext) -> list[LaunchDescriptionEntity]:
         return self.actions
