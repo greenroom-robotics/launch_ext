@@ -1,4 +1,3 @@
-from six.moves.builtins import list
 from typing import Literal
 from pydantic import BaseModel
 from pydantic.fields import Field

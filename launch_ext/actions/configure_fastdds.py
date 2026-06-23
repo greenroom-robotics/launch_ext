@@ -13,12 +13,13 @@ from launch.actions import (
 from launch.substitutions import (
     LaunchConfiguration,
 )
-from launch_ext.actions import WriteFile, ExecuteAfterProcessOutput
-from launch_ext.substitutions import (
+from .write_file import WriteFile
+from .execute_after_process_output import ExecuteAfterProcessOutput
+from ..substitutions import (
     FastDDSProfile,
     get_fastdds_default_profile_env_var,
 )
-from launch_ext.events import ActionReady
+from ..events import ActionReady
 
 from ..discovery.discovery_config import IPEndPoint
 

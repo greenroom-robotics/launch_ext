@@ -12,7 +12,7 @@ invocation gets the relative-symlink behaviour.
 
 from ros2launch.option import OptionExtension
 
-from launch_ext.patches import relative_latest_symlink
+from ..patches import relative_latest_symlink
 
 
 class RelativeLatestSymlinkOption(OptionExtension):

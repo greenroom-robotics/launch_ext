@@ -1,17 +1,12 @@
-from typing import Literal
 from launch.actions import SetLaunchConfiguration, ExecuteProcess, RegisterEventHandler
 from launch.launch_description_entity import LaunchDescriptionEntity
 from launch.some_entities_type import SomeEntitiesType
 from launch.utilities import normalize_to_list_of_entities
 
 
-from launch_ext.actions.configure_zenoh import deep_merge
-from launch_ext.discovery.discovery_config import Discovery
+from ..discovery.discovery_config import Discovery
 
-from launch_ext.actions.configure_fastdds import ConfigureFastDDS, FastDDSDiscoveryServer
-from launch_ext.actions.configure_zenoh import ConfigureZenoh
-from launch_ext.actions.execute_and_after_process_exit import ExecuteAndAfterProcessExit
-from launch_ext.event_handlers import OnActionReady
+from ..event_handlers import OnActionReady
 
 
 def configure_middleware(
@@ -19,6 +14,12 @@ def configure_middleware(
     run_server = True,
     then: SomeEntitiesType | None = None,
 ) -> list[LaunchDescriptionEntity]:
+    # Imported lazily to avoid a circular import: the ``actions`` package
+    # pulls in ``substitutions`` -> ``discovery`` -> this module.
+    from ..actions.configure_zenoh import deep_merge, ConfigureZenoh
+    from ..actions.configure_fastdds import ConfigureFastDDS, FastDDSDiscoveryServer
+    from ..actions.execute_and_after_process_exit import ExecuteAndAfterProcessExit
+
     then = normalize_to_list_of_entities([then] if then else [])
 
     if discovery_config.middleware == "zenoh":
