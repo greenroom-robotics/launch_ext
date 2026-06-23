@@ -30,14 +30,14 @@ class FastDDSProfile(Substitution):
         external_interfaces: list[str] | None = None,
         external_discovery_servers: list[IPEndPoint] | None = None,
         shm_large_segment: bool = False,
-        ros_domain_id: int | None = None,
+        domain_id: int | None = None,
     ):
         self.discovery_protocol = discovery_protocol
         self.local_discovery_server = local_discovery_server
         self.external_interfaces = [ResolveHost(iface) for iface in external_interfaces] if external_interfaces else []
         self.external_discovery_servers = external_discovery_servers
         self.shm_large_segment = shm_large_segment
-        self.ros_domain_id = ros_domain_id
+        self.domain_id = domain_id
 
         self.template_vars = {
                 "discovery_protocol": self.discovery_protocol,
@@ -45,7 +45,7 @@ class FastDDSProfile(Substitution):
                 "external_interfaces": self.external_interfaces,
                 "external_discovery_servers": self.external_discovery_servers,
                 "shm_large_segment": self.shm_large_segment,
-                "ros_domain_id": self.ros_domain_id,
+                "domain_id": self.domain_id,
                 "ros_distro": ROSDistro(),
                 "launch_log_dir": LaunchLogDir(),
         }

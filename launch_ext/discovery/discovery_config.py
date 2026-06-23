@@ -2,6 +2,8 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic.fields import Field
 
+DEFAULT_FAST_DISCOVERY_SERVER_PORT = 11811
+
 
 class IPEndPoint(BaseModel):
     address: str = Field(
@@ -26,6 +28,10 @@ class DiscoveryFastDDS(BaseModel):
     run_discovery_server: bool = Field(
         default=True,
         description="Run the discovery server.",
+    )
+    local_discovery_server: IPEndPoint = Field(
+        default_factory=lambda: IPEndPoint(address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT),
+        description="Local discovery server endpoint.",
     )
     external_interfaces: list[str] = Field(
         default_factory=list,
@@ -52,7 +58,7 @@ class Discovery(BaseModel):
         default="zenoh",
         description="Middleware to use: 'fastdds' or 'zenoh'",
     )
-    ros_domain_id: int = Field(
+    domain_id: int = Field(
         default=0,
         description="ROS domain ID",
     )

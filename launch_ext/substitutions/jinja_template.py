@@ -11,6 +11,8 @@ from launch.some_substitutions_type import SomeSubstitutionsType
 from launch.utilities import normalize_to_list_of_substitutions
 from launch.utilities import perform_substitutions
 
+from launch_ext.utilities import perform_substitutions_within_structure
+
 class JinjaTemplate(Substitution):
     """Substitution that renders a Jinja2 template."""
 
@@ -32,20 +34,11 @@ class JinjaTemplate(Substitution):
         template = env.get_template(template_path_str.name)
 
         return template.render(
-            **{k: self._resolve_value(context, v) for k, v in self.template_vars.items()}
+            **{
+                k: perform_substitutions_within_structure(context, v)
+                for k, v in self.template_vars.items()
+            }
         )
-
-    @staticmethod
-    def _resolve_value(context: LaunchContext, value: SomeSubstitutionsType | Any) -> Any:
-        """Resolve a template variable value.
-
-        Strings and substitutions are performed against the launch context and
-        rendered to a string. Any other object (e.g. a list, tuple or int) is
-        passed through unchanged so the template can use it directly.
-        """
-        if isinstance(value, (str, Substitution)):
-            return perform_substitutions(context, normalize_to_list_of_substitutions(value))
-        return value
 
     def describe(self):
         return f"JinjaTemplate({self.template_path}, {self.template_vars})"

@@ -21,10 +21,9 @@ from ..substitutions import (
 )
 from ..events import ActionReady
 
-from ..discovery.discovery_config import IPEndPoint
+from ..discovery.discovery_config import IPEndPoint, DEFAULT_FAST_DISCOVERY_SERVER_PORT
 
 
-DEFAULT_FAST_DISCOVERY_SERVER_PORT = 11811
 
 class FastDDSDiscoveryServer(Action):
     """
@@ -35,7 +34,7 @@ class FastDDSDiscoveryServer(Action):
         self,
         external_interfaces: list[str] | None = None,
         external_discovery_servers: list[IPEndPoint] | None = None,
-        port: int = DEFAULT_FAST_DISCOVERY_SERVER_PORT,
+        local_discovery_server: IPEndPoint = IPEndPoint(address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT),
         server_id: str = "0",
         fastdds_profile_path_dir: str | pathlib.Path | None = None,
         **kwargs,
@@ -47,7 +46,7 @@ class FastDDSDiscoveryServer(Action):
             external_interfaces (list[str]): List of interfaces that are expected to be used for cross-host communication. First is used as primary. Empty means only intra-host communication.
             external_discovery_servers (list[IPEndPoint]): List of external discovery servers to connect to.
             fastdds_profile_path_dir (str | pathlib.Path): Optional prefix path for the generated Fast DDS profile XML files. If not provided, defaults to the user's home directory.
-            ros_domain_id (int): Optional ROS domain ID to set in the Fast DDS profiles.
+            domain_id (int): Optional ROS domain ID to set in the Fast DDS profiles.
             **kwargs: Additional arguments passed to the parent Action class
         """
         super().__init__(**kwargs)
@@ -70,7 +69,7 @@ class FastDDSDiscoveryServer(Action):
         write_fastdds_discovery_server = WriteFile(
             FastDDSProfile(
                 discovery_protocol="SERVER",
-                local_discovery_server=IPEndPoint(address="127.0.0.1", port=port),
+                local_discovery_server=local_discovery_server,
                 external_interfaces=external_interfaces,
                 external_discovery_servers=external_discovery_servers,
             ),
@@ -128,13 +127,14 @@ class ConfigureFastDDS(Action):
         self,
         discovery_protocol: str = "CLIENT",
         external_interfaces: list[str] | None = None,
+        local_discovery_server: IPEndPoint = IPEndPoint(address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT),
         shm_large_segment: bool = False,
-        ros_domain_id: int | None = None,
+        domain_id: int | None = None,
         fastdds_profile_path_dir=None,
         **kwargs,
     ):
         """
-        Initialize the ConfigureFastdds action.
+        Initialize the ConfigureFastDDS action.
 
         Args:
             fastdds_profile_path (str, optional): Path where to write the main Fast DDS profile.
@@ -158,9 +158,10 @@ class ConfigureFastDDS(Action):
         write_fastdds_local_profile = WriteFile(
             FastDDSProfile(
                 discovery_protocol=discovery_protocol,
+                local_discovery_server=local_discovery_server,
                 external_interfaces=external_interfaces,
                 shm_large_segment=shm_large_segment,
-                ros_domain_id=ros_domain_id,
+                domain_id=domain_id,
             ),
             LaunchConfiguration("fastdds_profile"),
         )

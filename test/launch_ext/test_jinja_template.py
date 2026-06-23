@@ -75,6 +75,23 @@ def test_non_substitution_values_pass_through(tmp_path):
     assert JinjaTemplate(str(template), {"items": ("a", "b")}).perform(lc) == "a,b,"
 
 
+def test_substitutions_resolved_within_structure(tmp_path):
+    template = tmp_path / "hosts.j2"
+    template.write_text("{% for h in hosts %}{{ h }},{% endfor %}")
+
+    lc = LaunchContext()
+    SetLaunchConfiguration("host_a", "alpha").visit(lc)
+    SetLaunchConfiguration("host_b", "beta").visit(lc)
+
+    # Substitutions inside a list are resolved while the list structure is kept,
+    # so the template iterates the individual resolved values.
+    sub = JinjaTemplate(
+        str(template),
+        {"hosts": [LaunchConfiguration("host_a"), LaunchConfiguration("host_b")]},
+    )
+    assert sub.perform(lc) == "alpha,beta,"
+
+
 def test_describe(tmp_path):
     template = tmp_path / "describe.j2"
     template.write_text("hi")

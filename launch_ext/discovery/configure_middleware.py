@@ -56,7 +56,8 @@ def configure_middleware(
         cfg = ConfigureFastDDS(
             discovery_protocol=discovery_protocol,
             external_interfaces=discovery_config.fastdds.external_interfaces,
-            ros_domain_id=discovery_config.ros_domain_id,
+            local_discovery_server=discovery_config.fastdds.local_discovery_server,
+            domain_id=discovery_config.domain_id,
         )
 
         stop_ros2_daemon = ExecuteProcess(
@@ -83,7 +84,8 @@ def configure_middleware(
             ds = FastDDSDiscoveryServer(
                 external_interfaces=discovery_config.fastdds.external_interfaces,
                 external_discovery_servers=discovery_config.fastdds.external_discovery_servers,
-                ros_domain_id=discovery_config.ros_domain_id,
+                local_discovery_server=discovery_config.fastdds.local_discovery_server,
+                domain_id=discovery_config.domain_id,
             )
 
             after_clean_actions = [
