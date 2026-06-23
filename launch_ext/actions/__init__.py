@@ -13,7 +13,6 @@ from .write_file import WriteFile
 from .set_launch_configuration_if_not_none import SetLaunchConfigurationIfNotNone
 from .git_repo_info import LogRepoInfo, VerifyRepoCommit, VerifyRepoClean, SaveRepoDiff
 from .configure_fastdds import ConfigureFastDDS
-from .configure_fastdds_easy import ConfigureFastDDSEasyMode
 from .configure_zenoh import ConfigureZenoh
 from .configure_avahi import ConfigureAvahi, AvahiProductService
 from .execute_after_process_output import ExecuteAfterProcessOutput
@@ -37,7 +36,6 @@ __all__ = [
     "VerifyRepoClean",
     "SaveRepoDiff",
     "ConfigureFastDDS",
-    "ConfigureFastDDSEasyMode",
     "ConfigureZenoh",
     "ConfigureAvahi",
     "AvahiProductService",

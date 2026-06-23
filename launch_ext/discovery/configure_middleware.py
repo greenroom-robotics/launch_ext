@@ -50,8 +50,17 @@ def configure_middleware(
     if discovery_config.middleware == "fastdds":
         if discovery_config.fastdds.discovery_type == "discovery_server":
             discovery_protocol = "CLIENT"
+        elif discovery_config.fastdds.discovery_type == "easy":
+            raise NotImplementedError("Easy mode is not implemented yet")
+            # discovery_protocol = "SIMPLE"
+            # SetEnvironmentVariable(
+            #     "ROS2_EASY_MODE",
+            #     ResolveHost(easy_mode_base_address),
+            # )
+            # discovery_protocol = "EASY"
         else:
-            discovery_protocol = discovery_config.fastdds.discovery_type.upper()
+            # discovery_protocol = "SIMPLE"
+            raise NotImplementedError("Simple mode is not implemented yet")
 
         cfg = ConfigureFastDDS(
             discovery_protocol=discovery_protocol,
@@ -102,5 +111,7 @@ def configure_middleware(
             stop_ros2_daemon, ExecuteAndAfterProcessExit(shm_clean, after_clean_actions)
         )
 
-    raise NotImplementedError(f"Discovery type '{discovery_config.type}' is not supported yet")
+    raise NotImplementedError(
+        f"Discovery middleware '{discovery_config.middleware}' is not supported yet"
+    )
 

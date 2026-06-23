@@ -36,6 +36,7 @@ class FastDDSDiscoveryServer(Action):
         external_discovery_servers: list[IPEndPoint] | None = None,
         local_discovery_server: IPEndPoint = IPEndPoint(address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT),
         server_id: str = "0",
+        domain_id: int | None = None,
         fastdds_profile_path_dir: str | pathlib.Path | None = None,
         **kwargs,
     ):
@@ -72,6 +73,7 @@ class FastDDSDiscoveryServer(Action):
                 local_discovery_server=local_discovery_server,
                 external_interfaces=external_interfaces,
                 external_discovery_servers=external_discovery_servers,
+                domain_id=domain_id,
             ),
             LaunchConfiguration("fastdds_discovery_server_profile"),
         )
