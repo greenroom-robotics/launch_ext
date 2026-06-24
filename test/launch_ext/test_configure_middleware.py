@@ -8,7 +8,7 @@ from launch.utilities import perform_substitutions
 
 from launch_ext.actions import ConfigureZenoh
 from launch_ext.discovery.configure_middleware import configure_middleware
-from launch_ext.discovery.discovery_config import Discovery, DiscoveryFastDDS, DiscoveryZenoh
+from launch_ext.discovery.middleware_config import MiddlewareConfig, ZenohMiddleware, FastDDSMiddleware, MiddlewareTypes, FastDDSDiscoveryType
 
 
 def _name_of(set_launch_configuration: SetLaunchConfiguration) -> str:
@@ -16,7 +16,7 @@ def _name_of(set_launch_configuration: SetLaunchConfiguration) -> str:
 
 
 def test_zenoh_returns_reset_and_configure_zenoh():
-    result = configure_middleware(Discovery(middleware="zenoh"))
+    result = configure_middleware(MiddlewareConfig(middleware=MiddlewareTypes.ZENOH))
 
     assert isinstance(result, list)
     assert len(result) == 2
@@ -29,20 +29,20 @@ def test_zenoh_returns_reset_and_configure_zenoh():
 
 def test_zenoh_appends_then():
     then = SetLaunchConfiguration("my_flag", "1")
-    result = configure_middleware(Discovery(middleware="zenoh"), then=then)
+    result = configure_middleware(MiddlewareConfig(middleware=MiddlewareTypes.ZENOH), then=then)
 
     assert len(result) == 3
     # `then` entities are appended after the zenoh setup.
     assert result[-1] is then
 
 
-def test_zenoh_with_router_peers_is_valid():
+def test_zenoh_run_router_peers_is_valid():
     # router_peers triggers a deep_merge into the router config; the returned
     # structure should be unchanged and not raise.
     result = configure_middleware(
-        Discovery(
-            middleware="zenoh",
-            zenoh=DiscoveryZenoh(router_peers=["10.0.0.1", "10.0.0.2"], with_router=True),
+        MiddlewareConfig(
+            middleware=MiddlewareTypes.ZENOH,
+            zenoh=ZenohMiddleware(router_peers=["10.0.0.1", "10.0.0.2"], run_router=True),
         )
     )
 
@@ -51,7 +51,7 @@ def test_zenoh_with_router_peers_is_valid():
 
 def test_fastdds_discovery_server_without_running_server():
     result = configure_middleware(
-        Discovery(middleware="fastdds", fastdds=DiscoveryFastDDS(discovery_type="discovery_server")),
+        MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.DISCOVERY_SERVER)),
         run_server=False,
     )
 
@@ -66,20 +66,20 @@ def test_fastdds_discovery_server_without_running_server():
 def test_fastdds_simple_not_implemented():
     with pytest.raises(NotImplementedError):
         configure_middleware(
-            Discovery(middleware="fastdds", fastdds=DiscoveryFastDDS(discovery_type="simple"))
+            MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.SIMPLE))
         )
 
 
 def test_fastdds_easy_not_implemented():
     with pytest.raises(NotImplementedError):
         configure_middleware(
-            Discovery(middleware="fastdds", fastdds=DiscoveryFastDDS(discovery_type="easy"))
+            MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.EASY))
         )
 
 
 def test_fastdds_discovery_server_with_running_server():
     result = configure_middleware(
-        Discovery(middleware="fastdds", fastdds=DiscoveryFastDDS(discovery_type="discovery_server")),
+        MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.DISCOVERY_SERVER)),
         run_server=True,
     )
 

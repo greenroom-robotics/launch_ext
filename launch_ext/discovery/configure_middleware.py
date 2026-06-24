@@ -4,13 +4,13 @@ from launch.some_entities_type import SomeEntitiesType
 from launch.utilities import normalize_to_list_of_entities
 
 
-from ..discovery.discovery_config import Discovery
+from ..discovery.middleware_config import MiddlewareConfig
 
 from ..event_handlers import OnActionReady
 
 
 def configure_middleware(
-    discovery_config: Discovery,
+    middleware_config: MiddlewareConfig,
     run_server = True,
     then: SomeEntitiesType | None = None,
 ) -> list[LaunchDescriptionEntity]:
@@ -22,8 +22,8 @@ def configure_middleware(
 
     then = normalize_to_list_of_entities([then] if then else [])
 
-    if discovery_config.middleware == "zenoh":
-        zenoh = discovery_config.zenoh
+    if middleware_config.middleware == "zenoh":
+        zenoh = middleware_config.zenoh
         router_peers = zenoh.router_peers
         router_config = zenoh.router_config
         session_config = zenoh.session_config
@@ -39,7 +39,7 @@ def configure_middleware(
         return [
             SetLaunchConfiguration("fastdds_profile_super_client", ""),
             ConfigureZenoh(
-                with_router=zenoh.with_router and run_server,
+                run_router=zenoh.run_router and run_server,
                 router_config=router_config,
                 session_config=session_config,
                 generate_router_config_file=True,
@@ -47,10 +47,10 @@ def configure_middleware(
             ),
         ] + then
 
-    if discovery_config.middleware == "fastdds":
-        if discovery_config.fastdds.discovery_type == "discovery_server":
+    if middleware_config.middleware == "fastdds":
+        if middleware_config.fastdds.discovery_type == "discovery_server":
             discovery_protocol = "CLIENT"
-        elif discovery_config.fastdds.discovery_type == "easy":
+        elif middleware_config.fastdds.discovery_type == "easy":
             raise NotImplementedError("Easy mode is not implemented yet")
             # discovery_protocol = "SIMPLE"
             # SetEnvironmentVariable(
@@ -64,9 +64,9 @@ def configure_middleware(
 
         cfg = ConfigureFastDDS(
             discovery_protocol=discovery_protocol,
-            external_interfaces=discovery_config.fastdds.external_interfaces,
-            local_discovery_server=discovery_config.fastdds.local_discovery_server,
-            domain_id=discovery_config.domain_id,
+            external_interfaces=middleware_config.fastdds.external_interfaces,
+            local_discovery_server=middleware_config.fastdds.local_discovery_server,
+            domain_id=middleware_config.ros_domain_id,
         )
 
         stop_ros2_daemon = ExecuteProcess(
@@ -91,10 +91,10 @@ def configure_middleware(
 
         if run_server:
             ds = FastDDSDiscoveryServer(
-                external_interfaces=discovery_config.fastdds.external_interfaces,
-                external_discovery_servers=discovery_config.fastdds.external_discovery_servers,
-                local_discovery_server=discovery_config.fastdds.local_discovery_server,
-                domain_id=discovery_config.domain_id,
+                external_interfaces=middleware_config.fastdds.external_interfaces,
+                external_discovery_servers=middleware_config.fastdds.external_discovery_servers,
+                local_discovery_server=middleware_config.fastdds.local_discovery_server,
+                domain_id=middleware_config.ros_domain_id,
             )
 
             after_clean_actions = [
@@ -112,6 +112,6 @@ def configure_middleware(
         )
 
     raise NotImplementedError(
-        f"Discovery middleware '{discovery_config.middleware}' is not supported yet"
+        f"Discovery middleware '{middleware_config.middleware}' is not supported yet"
     )
 

@@ -6,7 +6,7 @@ import launch.logging
 from .fastdds_env_var import get_fastdds_default_profile_env_var
 
 
-class FastDDSClientEnvironment(Substitution):
+class FastDDSClientPath(Substitution):
     """Substitution that provides the FastDDS Client profile path.
 
     Use this in a Node's environment parameter to configure regular Client mode.
@@ -17,7 +17,7 @@ class FastDDSClientEnvironment(Substitution):
         discovery_mode: str,
         fastdds_profile_path: str | None = None,
     ):
-        """Initialize the FastDDSClientEnvironment substitution.
+        """Initialize the FastDDSClientPath substitution.
 
         Args:
             fastdds_profile_path (str | None): Path to the FastDDS profile file.
@@ -43,7 +43,7 @@ class FastDDSClientEnvironment(Substitution):
         return self.profile_path
 
     def describe(self):
-        return f"FastDDSClientEnvironment(profile_path={self.profile_path})"
+        return f"FastDDSClientPath(profile_path={self.profile_path})"
 
 
 def get_fastdds_client_environment(
@@ -70,7 +70,7 @@ def get_fastdds_client_environment(
         return {}
 
     return {
-        get_fastdds_default_profile_env_var(): FastDDSClientEnvironment(
+        get_fastdds_default_profile_env_var(): FastDDSClientPath(
             discovery_mode, fastdds_profile_path
         )
     }

@@ -93,7 +93,7 @@ class ConfigureZenoh(Action):
 
     def __init__(
         self,
-        with_router: bool = False,
+        run_router: bool = False,
         router_config: Optional[dict] = None,
         session_config: Optional[dict] = None,
         generate_router_config_file: bool = False,
@@ -106,7 +106,7 @@ class ConfigureZenoh(Action):
         Initialize the ConfigureZenoh action.
 
         Args:
-            with_router (bool): Whether to start a Zenoh router process
+            run_router (bool): Whether to start a Zenoh router process
             router_config (dict, optional): Configuration overrides for the Zenoh router
                 (only used if generate_router_config_file=True)
             session_config (dict, optional): Configuration overrides for the Zenoh session
@@ -174,7 +174,7 @@ class ConfigureZenoh(Action):
             self.actions.append(set_session_config_uri)
 
         # Conditionally add the router node to the actions
-        if with_router:
+        if run_router:
             zenoh_router = Node(
                 name="zenoh_router",
                 package="rmw_zenoh_cpp",

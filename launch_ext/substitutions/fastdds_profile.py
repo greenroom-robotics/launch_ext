@@ -11,7 +11,7 @@ from .ros_distro import ROSDistro
 
 from .jinja_template import JinjaTemplate
 
-from ..discovery.discovery_config import IPEndPoint
+from ..discovery.middleware_config import IPEndPoint
 
 
 
