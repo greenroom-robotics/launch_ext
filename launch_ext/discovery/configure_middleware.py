@@ -4,7 +4,7 @@ from launch.some_entities_type import SomeEntitiesType
 from launch.utilities import normalize_to_list_of_entities
 
 
-from ..discovery.middleware_config import MiddlewareConfig
+from ..discovery.middleware_config import MiddlewareConfig, MiddlewareTypes, FastDDSDiscoveryType
 
 from ..event_handlers import OnActionReady
 
@@ -22,7 +22,7 @@ def configure_middleware(
 
     then = normalize_to_list_of_entities([then] if then else [])
 
-    if middleware_config.middleware == "zenoh":
+    if middleware_config.middleware == MiddlewareTypes.ZENOH:
         zenoh = middleware_config.zenoh
         router_peers = zenoh.router_peers
         router_config = zenoh.router_config
@@ -47,10 +47,10 @@ def configure_middleware(
             ),
         ] + then
 
-    if middleware_config.middleware == "fastdds":
-        if middleware_config.fastdds.discovery_type == "discovery_server":
+    if middleware_config.middleware == MiddlewareTypes.FASTDDS:
+        if middleware_config.fastdds.discovery_type == FastDDSDiscoveryType.DISCOVERY_SERVER:
             discovery_protocol = "CLIENT"
-        elif middleware_config.fastdds.discovery_type == "easy":
+        elif middleware_config.fastdds.discovery_type == FastDDSDiscoveryType.EASY:
             raise NotImplementedError("Easy mode is not implemented yet")
             # discovery_protocol = "SIMPLE"
             # SetEnvironmentVariable(
