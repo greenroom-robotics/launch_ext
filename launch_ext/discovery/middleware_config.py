@@ -144,7 +144,7 @@ class MiddlewareConfig(BaseModel):
     model_config = ConfigDict(title="Middleware")
 
     middleware: MiddlewareTypes = Field(
-        default=MiddlewareTypes.FASTDDS,
+        default=MiddlewareTypes.ZENOH,
         title="Middleware",
         description="Middleware to use: 'fastdds' or 'zenoh'",
     )
