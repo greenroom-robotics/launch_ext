@@ -6,7 +6,7 @@ from launch.action import Action
 from launch.actions import OpaqueFunction
 from launch.launch_context import LaunchContext
 
-from launch_ext.discovery.avahi_manager import AvahiServiceManager
+from ..discovery.avahi_manager import AvahiServiceManager
 
 
 @dataclass

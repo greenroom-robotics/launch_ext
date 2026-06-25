@@ -31,14 +31,13 @@ def _renew_latest_log_dir_relative(*, log_dir):
     :return: True if the link was successfully created/updated, False otherwise
     """
     base_dir = os.path.dirname(log_dir)
-    latest_dir = os.path.join(base_dir, 'latest')
+    latest_dir = os.path.join(base_dir, "latest")
 
     if os.path.lexists(latest_dir):
         if not os.path.islink(latest_dir):
             return False
         os.unlink(latest_dir)
-    os.symlink(
-        os.path.basename(log_dir), latest_dir, target_is_directory=True)
+    os.symlink(os.path.basename(log_dir), latest_dir, target_is_directory=True)
     return True
 
 

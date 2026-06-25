@@ -189,14 +189,14 @@ Configure Zenoh middleware for ROS 2 communication.
 
 ```python
 ConfigureZenoh(
-    with_router=True,
+    run_router=True,
     router_config={'port': 7447},
     session_config={'mode': 'peer'}
 )
 ```
 
 **Parameters:**
-- `with_router`: Whether to start a Zenoh router
+- `run_router`: Whether to start a Zenoh router
 - `router_config`: Router configuration overrides
 - `session_config`: Session configuration overrides
 

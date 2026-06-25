@@ -1,59 +1,76 @@
-from launch.actions import SetLaunchConfiguration, ExecuteProcess
+from launch.actions import ExecuteProcess, RegisterEventHandler
 from launch.launch_description_entity import LaunchDescriptionEntity
 from launch.some_entities_type import SomeEntitiesType
 from launch.utilities import normalize_to_list_of_entities
 
 
-from launch_ext.actions.configure_zenoh import deep_merge
-from launch_ext.discovery.discovery_config import Discovery
+from ..discovery.middleware_config import MiddlewareConfig, MiddlewareTypes, FastDDSDiscoveryType
 
-from launch_ext.actions.configure_fastdds import ConfigureFastDDS
-from launch_ext.actions.configure_fastdds_easy import ConfigureFastDDSEasyMode
-from launch_ext.actions.configure_zenoh import ConfigureZenoh
-from launch_ext.actions.execute_after_process_output import ExecuteAfterProcessOutput
-from launch_ext.actions.execute_and_after_process_exit import ExecuteAndAfterProcessExit
+from ..event_handlers import OnActionReady
 
 
 def configure_middleware(
-    discovery: Discovery,
-    with_server=True,
+    middleware_config: MiddlewareConfig,
+    inherit: bool = False,
     then: SomeEntitiesType | None = None,
 ) -> list[LaunchDescriptionEntity]:
+    """
+    Configure the middleware from configuration structure.
+
+    Args:
+        middleware_config: The middleware configuration to use.
+        inherit: Inherit an already configured middleware setup. Do not run anything.
+        then: Additional launch entities to execute after the middleware is configured.
+    """
+
+    # Imported lazily to avoid a circular import: the ``actions`` package
+    # pulls in ``substitutions`` -> ``discovery`` -> this module.
+    from ..actions.configure_zenoh import deep_merge, ConfigureZenoh
+    from ..actions.configure_fastdds import ConfigureFastDDS, FastDDSDiscoveryServer
+    from ..actions.execute_and_after_process_exit import ExecuteAndAfterProcessExit
+
     then = normalize_to_list_of_entities([then] if then else [])
 
-    if discovery.type == "zenoh":
-        zenoh = discovery.zenoh
-        router_peers = zenoh.router_peers
-        router_config = zenoh.router_config
-        session_config = zenoh.session_config
-
+    if middleware_config.middleware == MiddlewareTypes.ZENOH:
         # Merge router_peers into router_config connect/endpoints
-        if router_peers:
-            peer_endpoints = [f"tcp/{peer}:7447" for peer in router_peers]
-            router_config = deep_merge(
-                router_config,
+        if middleware_config.zenoh.router_peers:
+            peer_endpoints = [f"tcp/{peer}:7447" for peer in middleware_config.zenoh.router_peers]
+            middleware_config.zenoh.router_config = deep_merge(
+                middleware_config.zenoh.router_config,
                 {"connect": {"endpoints": peer_endpoints}},
             )
 
         return [
-            SetLaunchConfiguration("fastdds_profile_super_client", ""),
             ConfigureZenoh(
-                with_router=zenoh.with_router and with_server,
-                router_config=router_config,
-                session_config=session_config,
-                generate_router_config_file=True,
-                generate_session_config_file=True,
+                run_router=middleware_config.zenoh.run_router and not inherit,
+                router_config=middleware_config.zenoh.router_config,
+                session_config=middleware_config.zenoh.session_config,
+                generate_router_config_file=True and not inherit,
+                generate_session_config_file=True and not inherit,
             ),
         ] + then
 
-    if discovery.type == "fastdds":
-        fastdds = discovery.fastdds
+    if middleware_config.middleware == MiddlewareTypes.FASTDDS:
+        if middleware_config.fastdds.discovery_type == FastDDSDiscoveryType.DISCOVERY_SERVER:
+            discovery_protocol = "CLIENT"
+        elif middleware_config.fastdds.discovery_type == FastDDSDiscoveryType.EASY:
+            raise NotImplementedError("Easy mode is not implemented yet")
+            # discovery_protocol = "SIMPLE"
+            # SetEnvironmentVariable(
+            #     "ROS2_EASY_MODE",
+            #     ResolveHost(easy_mode_base_address),
+            # )
+            # discovery_protocol = "EASY"
+        else:
+            # discovery_protocol = "SIMPLE"
+            raise NotImplementedError("Simple mode is not implemented yet")
 
         cfg = ConfigureFastDDS(
-            with_discovery_server=fastdds.with_discovery_server and with_server,
-            discovery_server_ip=fastdds.discovery_server_ip,
-            allowed_interfaces=fastdds.allowed_interfaces,
-            simple_discovery=False,
+            discovery_protocol=discovery_protocol,
+            external_interfaces=middleware_config.fastdds.external_interfaces,
+            local_discovery_server=middleware_config.fastdds.local_discovery_server,
+            domain_id=middleware_config.ros_domain_id,
+            inherit=inherit,
         )
 
         stop_ros2_daemon = ExecuteProcess(
@@ -76,36 +93,32 @@ def configure_middleware(
             output={"both": ["log", "screen"]},
         )
 
-        after_actions = then
+        if middleware_config.fastdds.run_discovery_server and not inherit:
+            ds = FastDDSDiscoveryServer(
+                external_interfaces=middleware_config.fastdds.external_interfaces,
+                external_discovery_servers=middleware_config.fastdds.external_discovery_servers,
+                local_discovery_server=middleware_config.fastdds.local_discovery_server,
+                domain_id=middleware_config.ros_domain_id,
+            )
 
-        if cfg.discovery_server:
-            after_actions = [
-                ExecuteAfterProcessOutput(
-                    target=cfg.discovery_server,
-                    match=b"Running on:",
-                    then=then,
-                ),
+            after_clean_actions = [
                 cfg,
+                RegisterEventHandler(
+                    OnActionReady(target_action=ds.discovery_server, on_ready=then)
+                ),
+                ds,
             ]
         else:
-            after_actions = [cfg] + after_actions
+            after_clean_actions = [cfg] + then
+
+        if inherit:
+            # If inheriting, we don't need to stop the ROS2 daemon or clean shared memory.
+            return after_clean_actions
 
         return ExecuteAndAfterProcessExit(
-            stop_ros2_daemon, ExecuteAndAfterProcessExit(shm_clean, after_actions)
+            stop_ros2_daemon, ExecuteAndAfterProcessExit(shm_clean, after_clean_actions)
         )
 
-    if discovery.type == "easy":
-        return [
-            ConfigureFastDDSEasyMode(
-                easy_mode_base_address=discovery.easy.base_address,
-            ),
-        ] + then
-
-    return [
-        ConfigureFastDDS(
-            with_discovery_server=False,
-            discovery_server_ip="0.0.0.0",
-            allowed_interfaces=[],
-            simple_discovery=True,
-        ),
-    ] + then
+    raise NotImplementedError(
+        f"Discovery middleware '{middleware_config.middleware}' is not supported yet"
+    )
