@@ -13,6 +13,7 @@ from launch.utilities import perform_substitutions
 
 from launch_ext.utilities import perform_substitutions_within_structure
 
+
 class JinjaTemplate(Substitution):
     """Substitution that renders a Jinja2 template."""
 

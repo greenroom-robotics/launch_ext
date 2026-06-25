@@ -21,7 +21,6 @@ from typing import List, Optional
 from launch.launch_description_entity import LaunchDescriptionEntity
 
 
-
 def deep_merge(base: dict, override: dict) -> dict:
     """
     Recursively merge two dictionaries, with override values taking precedence.
@@ -142,9 +141,11 @@ class ConfigureZenoh(Action):
         self.actions = []
 
         # Set environment variable to use the generated session config
-        self.actions.append(SetEnvironmentVariable(
-            name="ZENOH_SESSION_CONFIG_URI", value=zenoh_session_config_path
-        ))
+        self.actions.append(
+            SetEnvironmentVariable(
+                name="ZENOH_SESSION_CONFIG_URI", value=zenoh_session_config_path
+            )
+        )
 
         # Conditionally create configuration file actions
         if generate_router_config_file:
@@ -179,9 +180,11 @@ class ConfigureZenoh(Action):
             )
 
             # Set environment variable to use the generated router config
-            self.actions.append(SetEnvironmentVariable(
-                name="ZENOH_ROUTER_CONFIG_URI", value=zenoh_router_config_path
-            ))
+            self.actions.append(
+                SetEnvironmentVariable(
+                    name="ZENOH_ROUTER_CONFIG_URI", value=zenoh_router_config_path
+                )
+            )
 
             def renice_router(
                 event: ProcessStarted, _context: LaunchContext

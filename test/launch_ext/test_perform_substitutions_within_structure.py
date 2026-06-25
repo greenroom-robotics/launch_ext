@@ -18,9 +18,7 @@ def test_single_substitution():
 
 def test_list_is_not_merged():
     lc = _context()
-    result = perform_substitutions_within_structure(
-        lc, ["hello ", LaunchConfiguration("name")]
-    )
+    result = perform_substitutions_within_structure(lc, ["hello ", LaunchConfiguration("name")])
     # perform_substitutions would have merged these into "hello world";
     # here the list structure is preserved with each element resolved.
     assert result == ["hello ", "world"]

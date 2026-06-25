@@ -24,7 +24,6 @@ from ..events import ActionReady
 from ..discovery.middleware_config import IPEndPoint, DEFAULT_FAST_DISCOVERY_SERVER_PORT
 
 
-
 class FastDDSDiscoveryServer(Action):
     """
     Configure Fast DDS Discovery Server with the specified external interfaces and discovery servers, and start the server process.
@@ -34,7 +33,9 @@ class FastDDSDiscoveryServer(Action):
         self,
         external_interfaces: list[str] | None = None,
         external_discovery_servers: list[IPEndPoint] | None = None,
-        local_discovery_server: IPEndPoint | None= IPEndPoint(address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT),
+        local_discovery_server: IPEndPoint | None = IPEndPoint(
+            address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT
+        ),
         server_id: str = "0",
         domain_id: int | None = None,
         fastdds_profile_path_dir: str | pathlib.Path | None = None,
@@ -94,7 +95,7 @@ class FastDDSDiscoveryServer(Action):
         ready_emitter = ExecuteAfterProcessOutput(
             target=self.discovery_server,
             match=b"Running on:",
-            then=EmitEvent(event=ActionReady(action=self.discovery_server))
+            then=EmitEvent(event=ActionReady(action=self.discovery_server)),
         )
 
         self.actions = [
@@ -129,7 +130,9 @@ class ConfigureFastDDS(Action):
         self,
         discovery_protocol: str = "CLIENT",
         external_interfaces: list[str] | None = None,
-        local_discovery_server: IPEndPoint | None = IPEndPoint(address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT),
+        local_discovery_server: IPEndPoint | None = IPEndPoint(
+            address="127.0.0.1", port=DEFAULT_FAST_DISCOVERY_SERVER_PORT
+        ),
         shm_large_segment: bool = False,
         domain_id: int | None = None,
         fastdds_profile_path_dir=None,

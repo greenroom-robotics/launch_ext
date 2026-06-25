@@ -37,6 +37,7 @@ class LabelledStrEnum(str, Enum):
             "oneOf": [{"const": m.value, "title": m.label} for m in cls],
         }
 
+
 DEFAULT_FAST_DISCOVERY_SERVER_PORT = 11811
 
 
@@ -105,7 +106,8 @@ class FastDDSMiddleware(BaseModel):
     @field_validator("external_discovery_servers")
     def validate_discovery_servers_for_lo(cls, external_discovery_servers):
         if any(
-            server.address in ["0.0.0.0", "localhost", "127.0.0.1"] for server in external_discovery_servers
+            server.address in ["0.0.0.0", "localhost", "127.0.0.1"]
+            for server in external_discovery_servers
         ):
             raise ValueError(
                 "Using loopback is not valid for external_discovery_servers, please only define specific interfaces or leave empty for no external discovery servers."

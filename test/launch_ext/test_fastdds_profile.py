@@ -18,7 +18,6 @@ from launch import LaunchContext
 from launch_ext.substitutions import FastDDSProfile
 from launch_ext.discovery.middleware_config import IPEndPoint
 
-
 LOCAL_SERVER = IPEndPoint(address="127.0.0.1", port=11811)
 
 

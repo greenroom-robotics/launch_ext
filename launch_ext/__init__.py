@@ -12,8 +12,8 @@ from . import utilities
 __all__ = [
     "actions",
     # 'descriptions',
-    'event_handlers',
-    'events',
+    "event_handlers",
+    "events",
     "conditions",
     "substitutions",
     "entrypoints",

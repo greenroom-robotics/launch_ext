@@ -38,9 +38,7 @@ def perform_substitutions_within_structure(context: LaunchContext, structure: An
             for key, value in structure.items()
         }
     if isinstance(structure, tuple):
-        return tuple(
-            perform_substitutions_within_structure(context, item) for item in structure
-        )
+        return tuple(perform_substitutions_within_structure(context, item) for item in structure)
     if isinstance(structure, list):
         return [perform_substitutions_within_structure(context, item) for item in structure]
     return structure

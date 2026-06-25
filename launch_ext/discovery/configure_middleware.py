@@ -122,4 +122,3 @@ def configure_middleware(
     raise NotImplementedError(
         f"Discovery middleware '{middleware_config.middleware}' is not supported yet"
     )
-
