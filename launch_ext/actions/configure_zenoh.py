@@ -18,6 +18,8 @@ from launch_ros.actions import Node
 import json
 import launch.logging
 from typing import List, Optional
+from launch.launch_description_entity import LaunchDescriptionEntity
+
 
 
 def deep_merge(base: dict, override: dict) -> dict:
@@ -100,6 +102,7 @@ class ConfigureZenoh(Action):
         generate_session_config_file: bool = False,
         zenoh_router_config_path: Optional[str] = None,
         zenoh_session_config_path: Optional[str] = None,
+        inherit: bool = False,
         **kwargs,
     ):
         """
@@ -138,6 +141,11 @@ class ConfigureZenoh(Action):
         # Collect the actions to be executed
         self.actions = []
 
+        # Set environment variable to use the generated session config
+        self.actions.append(SetEnvironmentVariable(
+            name="ZENOH_SESSION_CONFIG_URI", value=zenoh_session_config_path
+        ))
+
         # Conditionally create configuration file actions
         if generate_router_config_file:
             write_zenoh_router_config = OpaqueFunction(
@@ -150,12 +158,6 @@ class ConfigureZenoh(Action):
             )
             self.actions.append(write_zenoh_router_config)
 
-            # Set environment variable to use the generated router config
-            set_router_config_uri = SetEnvironmentVariable(
-                name="ZENOH_ROUTER_CONFIG_URI", value=zenoh_router_config_path
-            )
-            self.actions.append(set_router_config_uri)
-
         if generate_session_config_file:
             write_zenoh_session_config = OpaqueFunction(
                 function=self.write_config_file,
@@ -167,12 +169,6 @@ class ConfigureZenoh(Action):
             )
             self.actions.append(write_zenoh_session_config)
 
-            # Set environment variable to use the generated session config
-            set_session_config_uri = SetEnvironmentVariable(
-                name="ZENOH_SESSION_CONFIG_URI", value=zenoh_session_config_path
-            )
-            self.actions.append(set_session_config_uri)
-
         # Conditionally add the router node to the actions
         if run_router:
             zenoh_router = Node(
@@ -181,6 +177,11 @@ class ConfigureZenoh(Action):
                 executable="rmw_zenohd",
                 output="both",
             )
+
+            # Set environment variable to use the generated router config
+            self.actions.append(SetEnvironmentVariable(
+                name="ZENOH_ROUTER_CONFIG_URI", value=zenoh_router_config_path
+            ))
 
             def renice_router(
                 event: ProcessStarted, _context: LaunchContext
@@ -201,21 +202,5 @@ class ConfigureZenoh(Action):
             )
             self.actions.append(zenoh_router)
 
-    def execute(self, context: LaunchContext) -> None:
-        """
-        Execute all configured actions in sequence.
-
-        This method is called by the launch system when the action is executed.
-        It iterates through all the actions created during initialization and
-        executes them in order.
-
-        Args:
-            context (LaunchContext): The launch context
-
-        Returns:
-            None
-        """
-        for action in self.actions:
-            action.execute(context)
-
-        return None
+    def execute(self, context: LaunchContext) -> list[LaunchDescriptionEntity]:
+        return self.actions

@@ -1,4 +1,4 @@
-from launch.actions import SetLaunchConfiguration, ExecuteProcess, RegisterEventHandler
+from launch.actions import ExecuteProcess, RegisterEventHandler
 from launch.launch_description_entity import LaunchDescriptionEntity
 from launch.some_entities_type import SomeEntitiesType
 from launch.utilities import normalize_to_list_of_entities
@@ -11,9 +11,18 @@ from ..event_handlers import OnActionReady
 
 def configure_middleware(
     middleware_config: MiddlewareConfig,
-    run_server = True,
+    inherit: bool = False,
     then: SomeEntitiesType | None = None,
 ) -> list[LaunchDescriptionEntity]:
+    """
+    Configure the middleware from configuration structure.
+
+    Args:
+        middleware_config: The middleware configuration to use.
+        inherit: Inherit an already configured middleware setup. Do not run anything.
+        then: Additional launch entities to execute after the middleware is configured.
+    """
+
     # Imported lazily to avoid a circular import: the ``actions`` package
     # pulls in ``substitutions`` -> ``discovery`` -> this module.
     from ..actions.configure_zenoh import deep_merge, ConfigureZenoh
@@ -23,27 +32,21 @@ def configure_middleware(
     then = normalize_to_list_of_entities([then] if then else [])
 
     if middleware_config.middleware == MiddlewareTypes.ZENOH:
-        zenoh = middleware_config.zenoh
-        router_peers = zenoh.router_peers
-        router_config = zenoh.router_config
-        session_config = zenoh.session_config
-
         # Merge router_peers into router_config connect/endpoints
-        if router_peers:
-            peer_endpoints = [f"tcp/{peer}:7447" for peer in router_peers]
-            router_config = deep_merge(
-                router_config,
+        if middleware_config.zenoh.router_peers:
+            peer_endpoints = [f"tcp/{peer}:7447" for peer in middleware_config.zenoh.router_peers]
+            middleware_config.zenoh.router_config = deep_merge(
+                middleware_config.zenoh.router_config,
                 {"connect": {"endpoints": peer_endpoints}},
             )
 
         return [
-            SetLaunchConfiguration("fastdds_profile_super_client", ""),
             ConfigureZenoh(
-                run_router=zenoh.run_router and run_server,
-                router_config=router_config,
-                session_config=session_config,
-                generate_router_config_file=True,
-                generate_session_config_file=True,
+                run_router=middleware_config.zenoh.run_router and not inherit,
+                router_config=middleware_config.zenoh.router_config,
+                session_config=middleware_config.zenoh.session_config,
+                generate_router_config_file=True and not inherit,
+                generate_session_config_file=True and not inherit,
             ),
         ] + then
 
@@ -67,6 +70,7 @@ def configure_middleware(
             external_interfaces=middleware_config.fastdds.external_interfaces,
             local_discovery_server=middleware_config.fastdds.local_discovery_server,
             domain_id=middleware_config.ros_domain_id,
+            inherit=inherit,
         )
 
         stop_ros2_daemon = ExecuteProcess(
@@ -89,7 +93,7 @@ def configure_middleware(
             output={"both": ["log", "screen"]},
         )
 
-        if run_server:
+        if middleware_config.fastdds.run_discovery_server and not inherit:
             ds = FastDDSDiscoveryServer(
                 external_interfaces=middleware_config.fastdds.external_interfaces,
                 external_discovery_servers=middleware_config.fastdds.external_discovery_servers,
@@ -106,6 +110,10 @@ def configure_middleware(
             ]
         else:
             after_clean_actions = [cfg] + then
+
+        if inherit:
+            # If inheriting, we don't need to stop the ROS2 daemon or clean shared memory.
+            return after_clean_actions
 
         return ExecuteAndAfterProcessExit(
             stop_ros2_daemon, ExecuteAndAfterProcessExit(shm_clean, after_clean_actions)

@@ -21,6 +21,8 @@ from .execute_and_after_process_exit import ExecuteAndAfterProcessExit
 from .execute_local import ExecuteLocalExt
 from .execute_process import ExecuteProcessExt
 from .staggered_execute import StaggeredExecute
+from .subscribe_ros_topic import SubscribeRosTopic
+from .restartable import Restartable
 
 __all__ = [
     "LogRotate",
@@ -42,4 +44,6 @@ __all__ = [
     "ExecuteAfterProcessOutput",
     "ExecuteAndAfterProcessExit",
     "StaggeredExecute",
+    "SubscribeRosTopic",
+    "Restartable",
 ]

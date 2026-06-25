@@ -51,8 +51,7 @@ def test_zenoh_run_router_peers_is_valid():
 
 def test_fastdds_discovery_server_without_running_server():
     result = configure_middleware(
-        MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.DISCOVERY_SERVER)),
-        run_server=False,
+        MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.DISCOVERY_SERVER, run_discovery_server=False))
     )
 
     # ExecuteAndAfterProcessExit returns [process, RegisterEventHandler]; here the
@@ -79,8 +78,7 @@ def test_fastdds_easy_not_implemented():
 
 def test_fastdds_discovery_server_with_running_server():
     result = configure_middleware(
-        MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.DISCOVERY_SERVER)),
-        run_server=True,
+        MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS, fastdds=FastDDSMiddleware(discovery_type=FastDDSDiscoveryType.DISCOVERY_SERVER, run_discovery_server=True))
     )
 
     # Same nested ExecuteAndAfterProcessExit shape as the no-server case; the

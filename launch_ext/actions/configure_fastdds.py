@@ -133,6 +133,7 @@ class ConfigureFastDDS(Action):
         shm_large_segment: bool = False,
         domain_id: int | None = None,
         fastdds_profile_path_dir=None,
+        inherit: bool = False,
         **kwargs,
     ):
         """
@@ -141,6 +142,7 @@ class ConfigureFastDDS(Action):
         Args:
             fastdds_profile_path (str, optional): Path where to write the main Fast DDS profile.
                 Defaults to "~/fastdds_profile.xml"
+            inherit (bool, optional): Whether to inherit an already configured middleware setup. Defaults to False.
             **kwargs: Additional arguments passed to the parent Action class
         """
         super().__init__(**kwargs)
@@ -172,14 +174,16 @@ class ConfigureFastDDS(Action):
         self.actions = [
             # Set launch configurations for profile paths
             SetLaunchConfiguration("fastdds_profile", fastdds_local_profile_path),
-            # Write the configuration files
-            write_fastdds_local_profile,
             # Configure environment to use the main profile
             SetEnvironmentVariable(
                 get_fastdds_default_profile_env_var(),
                 LaunchConfiguration("fastdds_profile"),
             ),
         ]
+
+        if not inherit:
+            # Write the configuration files
+            self.actions.append(write_fastdds_local_profile)
 
     def execute(self, context: LaunchContext) -> list[LaunchDescriptionEntity]:
         return self.actions
