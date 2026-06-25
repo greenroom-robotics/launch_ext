@@ -47,7 +47,7 @@ class FastDDSDiscoveryServer(Action):
             external_interfaces (list[str]): List of interfaces that are expected to be used for cross-host communication. First is used as primary. Empty means only intra-host communication.
             external_discovery_servers (list[IPEndPoint]): List of external discovery servers to connect to.
             fastdds_profile_path_dir (str | pathlib.Path): Optional prefix path for the generated Fast DDS profile XML files. If not provided, defaults to the user's home directory.
-            domain_id (int): Optional ROS domain ID to set in the Fast DDS profiles.
+            domain_id (int): Optional domain ID to set in the Fast DDS profiles.
             **kwargs: Additional arguments passed to the parent Action class
         """
         super().__init__(**kwargs)
