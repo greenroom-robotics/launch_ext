@@ -22,6 +22,8 @@ from .execute_local import ExecuteLocalExt
 from .execute_process import ExecuteProcessExt
 from .staggered_execute import StaggeredExecute
 from .subscribe_ros_topic import SubscribeRosTopic
+from .serve_ros_service import ServeRosService
+from .emit_event_on_trigger_service import EmitEventOnTriggerService
 from .restartable import Restartable
 
 __all__ = [
@@ -45,5 +47,7 @@ __all__ = [
     "ExecuteAndAfterProcessExit",
     "StaggeredExecute",
     "SubscribeRosTopic",
+    "ServeRosService",
+    "EmitEventOnTriggerService",
     "Restartable",
 ]
