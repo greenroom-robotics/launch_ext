@@ -10,8 +10,6 @@ from example_interfaces.srv._trigger import Trigger_Request, Trigger_Response
 from launch.logging import get_logger
 from rclpy.executors import ExternalShutdownException
 
-logger = get_logger("launch_with_restart_trigger")
-
 
 class SharedState:
     def __init__(self):
@@ -31,9 +29,11 @@ class TriggerNode(Node):
         super().__init__(node_name, namespace=namespace)
         self.shared_state = shared_state
         self.srv = self.create_service(Trigger, "restart", self.trigger_callback)
+        logger = get_logger("launch_with_restart_trigger")
         logger.info(f"Enabling restart for launch_service - {namespace}/{trigger_name}")
 
     def trigger_callback(self, request: Trigger_Request, response: Trigger_Response):
+        logger = get_logger("launch_with_restart_trigger")
         logger.info("Restart launch_service triggered")
         if self.shared_state.launch_service is not None:
             self.shared_state.restarted_via_trigger = True
@@ -82,6 +82,8 @@ def launch_with_restart_trigger(
     ```
     """
     rclpy.init()
+
+    logger = get_logger("launch_with_restart_trigger")
 
     def run_ros(shared_state: SharedState):
         try:

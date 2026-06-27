@@ -6,7 +6,7 @@ package_name = "launch_ext"
 
 setup(
     name=package_name,
-    version="2.5.0",
+    version="2.0.0",
     packages=find_packages(exclude=["test"]),
     data_files=[
         ("share/" + package_name, ["package.xml"]),
@@ -36,6 +36,11 @@ setup(
     entry_points={
         "launch.frontend.launch_extension": [
             "launch_ext = launch_ext",
+        ],
+        "ros2launch.option": [
+            "relative_latest_symlink ="
+            " launch_ext.ros2launch_options.relative_latest_symlink"
+            ":RelativeLatestSymlinkOption",
         ],
     },
 )

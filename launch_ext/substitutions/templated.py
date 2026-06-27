@@ -4,7 +4,7 @@ This module provides a substitution class that enables template-based string
 replacement using launch configurations as template variables.
 """
 
-from typing import List, Text
+from typing import List
 
 from string import Template
 

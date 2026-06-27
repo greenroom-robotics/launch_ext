@@ -13,7 +13,6 @@ from .write_file import WriteFile
 from .set_launch_configuration_if_not_none import SetLaunchConfigurationIfNotNone
 from .git_repo_info import LogRepoInfo, VerifyRepoCommit, VerifyRepoClean, SaveRepoDiff
 from .configure_fastdds import ConfigureFastDDS
-from .configure_fastdds_easy import ConfigureFastDDSEasyMode
 from .configure_zenoh import ConfigureZenoh
 from .configure_avahi import ConfigureAvahi, AvahiProductService
 from .execute_after_process_output import ExecuteAfterProcessOutput
@@ -22,6 +21,10 @@ from .execute_and_after_process_exit import ExecuteAndAfterProcessExit
 from .execute_local import ExecuteLocalExt
 from .execute_process import ExecuteProcessExt
 from .staggered_execute import StaggeredExecute
+from .subscribe_ros_topic import SubscribeRosTopic
+from .serve_ros_service import ServeROSService
+from .emit_event_on_trigger_service import EmitEventOnTriggerService
+from .restartable import Restartable
 
 __all__ = [
     "LogRotate",
@@ -37,11 +40,14 @@ __all__ = [
     "VerifyRepoClean",
     "SaveRepoDiff",
     "ConfigureFastDDS",
-    "ConfigureFastDDSEasyMode",
     "ConfigureZenoh",
     "ConfigureAvahi",
     "AvahiProductService",
     "ExecuteAfterProcessOutput",
     "ExecuteAndAfterProcessExit",
     "StaggeredExecute",
+    "SubscribeRosTopic",
+    "ServeROSService",
+    "EmitEventOnTriggerService",
+    "Restartable",
 ]

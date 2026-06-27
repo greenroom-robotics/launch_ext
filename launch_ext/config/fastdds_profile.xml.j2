@@ -7,19 +7,23 @@
             <transport_descriptor>
                 <transport_id>shm_transport</transport_id>
                 <type>SHM</type>
+                {% if shm_large_segment %}
+                <!-- Set 16MB segment size to reduce fragmentation and improve image FPS -->
                 <segment_size>16384000</segment_size>
+                {% endif %}
             </transport_descriptor>
 
             <!-- A pretty standard UDP transport -->
             <transport_descriptor>
                 <transport_id>udp_transport</transport_id>
                 <type>UDPv4</type>
-                {% if interfaces %}
                 {% if ros_distro == "kilted" %}
                 <!-- FastDDS 3.x (kilted) uses interfaces/allowlist -->
                 <interfaces>
                     <allowlist>
-                        {% for iface in interfaces %}
+                        <!-- The loopback interface is always allowed for DS metatraffic -->
+                        <interface name="127.0.0.1" netmask_filter="ON" />
+                        {% for iface in external_interfaces %}
                         <interface name="{{ iface }}" netmask_filter="OFF" />
                         {% endfor %}
                     </allowlist>
@@ -27,69 +31,112 @@
                 {% else %}
                 <!-- Older FastDDS 2.x (iron) uses interfaceWhiteList -->
                 <interfaceWhiteList>
-                    {% for iface in interfaces %}
+                    <address>127.0.0.1</address>
+                    {% for iface in external_interfaces %}
                     <address>{{ iface }}</address>
                     {% endfor %}
                 </interfaceWhiteList>
                 {% endif %}
-                {% endif %}
             </transport_descriptor>
         </transport_descriptors>
 
-        <participant profile_name="super_client_profile" is_default_profile="true">
+        <participant profile_name="client_profile" is_default_profile="true">
+            {% if domain_id %}
+            <domainId>{{ domain_id }}</domainId>
+            {% endif %}
             <rtps>
                 <userTransports>
                     <transport_id>shm_transport</transport_id>
                     <transport_id>udp_transport</transport_id>
                 </userTransports>
-                {% if interfaces %}
-                <defaultUnicastLocatorList>
-                    {% for iface in interfaces %}
-                    <locator>
-                        <udpv4>
-                            <address>{{ iface }}</address>
-                        </udpv4>
-                    </locator>
-                    {% endfor %}
-                </defaultUnicastLocatorList>
-                {% endif %}
+
+                <!-- skip potential webserver port conflicts -->
+                <port>
+                    <portBase>17400</portBase>
+                </port>
+
+                <ignore_non_matching_locators>true</ignore_non_matching_locators>
+
                 <useBuiltinTransports>false</useBuiltinTransports>
                 {% if discovery_protocol == "SERVER" %}
                 <builtin>
                     <discovery_config>
                         <discoveryProtocol>SERVER</discoveryProtocol>
+                        {% if external_discovery_servers %}
+                        <discoveryServersList>
+                            {% if ros_distro == "kilted" %}
+                            {% for ep in external_discovery_servers %}
+                            <locator>
+                                <udpv4>
+                                    <address>{{ ep.address }}</address>
+                                    <port>{{ ep.port }}</port>
+                                </udpv4>
+                            </locator>
+                            {% endfor %}
+                            {% else %}
+                            <!--
+                            FastDDS 2.x (jazzy and older - needed for iron lookout)
+                            -->
+                            {% for ep in external_discovery_servers %}
+                            <RemoteServer prefix="44.53.00.5f.45.50.52.4f.53.49.4d.41">
+                                <metatrafficUnicastLocatorList>
+                                    <locator>
+                                        <udpv4>
+                                            <address>{{ ep.address }}</address>
+                                            <port>{{ ep.port }}</port>
+                                        </udpv4>
+                                    </locator>
+                                </metatrafficUnicastLocatorList>
+                            </RemoteServer>
+                            {% endfor %}
+                            {% endif %}
+                        </discoveryServersList>
+                        {% endif %}
                     </discovery_config>
                     <metatrafficUnicastLocatorList>
-                        {% if interfaces %}
-                        {% for iface in interfaces %}
+                        <locator>
+                            <udpv4>
+                                <address>{{ local_discovery_server.address }}</address>
+                                <port>{{ local_discovery_server.port }}</port>
+                            </udpv4>
+                        </locator>
+
+                        {% for iface in external_interfaces %}
                         <locator>
                             <udpv4>
                                 <address>{{ iface }}</address>
-                                <port>11811</port>
+                                <port>{{ local_discovery_server.port }}</port>
                             </udpv4>
                         </locator>
                         {% endfor %}
-                        {% else %}
-                        <locator>
-                            <udpv4>
-                                <address>0.0.0.0</address>
-                                <port>11811</port>
-                            </udpv4>
-                        </locator>
-                        {% endif %}
                     </metatrafficUnicastLocatorList>
                 </builtin>
-                {% elif discovery_protocol not in ["SIMPLE", "SERVER"] %}
+
+                <discovery_server_thread>
+                    <!-- <scheduling_policy>-1</scheduling_policy> -->
+                    <priority>80</priority>
+                    <affinity>12</affinity>
+                    <!-- <stack_size>-1</stack_size> -->
+                </discovery_server_thread>
+
+                <typelookup_service_thread>
+                    <!-- <scheduling_policy>-1</scheduling_policy> -->
+                    <priority>80</priority>
+                    <affinity>12</affinity>
+                    <!-- <stack_size>-1</stack_size> -->
+                </typelookup_service_thread>
+                {% elif discovery_protocol == "CLIENT" %}
                 <builtin>
+                    <mutation_tries>1000</mutation_tries>
+
                     <discovery_config>
-                        <discoveryProtocol>{{ discovery_protocol }}</discoveryProtocol>
+                        <discoveryProtocol>SUPER_CLIENT</discoveryProtocol>
                         <discoveryServersList>
                             {% if ros_distro == "kilted" %}
-                            <!-- FastDDS 3.x (kilted) uses direct locator format -->
                             <locator>
                                 <udpv4>
-                                    <address>{{ discovery_server_ip }}</address>
-                                    <port>11811</port>
+                                    <address>{{ local_discovery_server.address }}</address>
+                                    <port>{{ local_discovery_server.port }}</port>
                                 </udpv4>
                             </locator>
                             {% else %}
@@ -100,8 +147,8 @@
                                 <metatrafficUnicastLocatorList>
                                     <locator>
                                         <udpv4>
-                                            <address>{{ discovery_server_ip }}</address>
-                                            <port>11811</port>
+                                            <address>{{ local_discovery_server.address }}</address>
+                                            <port>{{ local_discovery_server.port }}</port>
                                         </udpv4>
                                     </locator>
                                 </metatrafficUnicastLocatorList>
@@ -109,7 +156,29 @@
                             {% endif %}
                         </discoveryServersList>
                     </discovery_config>
+
+                    <metatrafficUnicastLocatorList>
+                        <locator>
+                            <udpv4>
+                                <address>127.0.0.1</address>
+                                <port>27400</port>
+                            </udpv4>
+                        </locator>
+                    </metatrafficUnicastLocatorList>
                 </builtin>
+
+                <propertiesPolicy>
+                    <properties>
+                        <property>
+                            <name>fastdds.type_propagation</name>
+                            <value>disabled</value>
+                        </property>
+                        <property>
+                            <name>fastdds.shm.enforce_metatraffic</name>
+                            <value>unicast</value>
+                        </property>
+                    </properties>
+                </propertiesPolicy>
                 {% endif %}
             </rtps>
         </participant>
@@ -141,12 +210,5 @@
                 <value>true</value>
             </property>
         </consumer>
-
-        <thread_settings>
-            <scheduling_policy>-1</scheduling_policy>
-            <priority>0</priority>
-            <affinity>0</affinity>
-            <stack_size>-1</stack_size>
-        </thread_settings>
     </log>
 </dds>

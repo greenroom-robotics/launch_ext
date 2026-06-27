@@ -4,3 +4,4 @@ install
 .mypy_cache
 # pixi local environments
 .pixi/
+__pycache__
