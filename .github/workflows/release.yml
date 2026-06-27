@@ -8,10 +8,6 @@ on:
         options:
           - ""
           - launch_ext
-      build_iron:
-        type: boolean
-        default: true
-        description: "Release for Iron"
 
 permissions:
   contents: write
@@ -24,7 +20,7 @@ jobs:
     with:
       package: ${{ inputs.package }}
       package_dir: .
-      build_iron: ${{ inputs.build_iron }}
+      build_iron: true
       changelog: false
       skip_tag: false
     secrets:
