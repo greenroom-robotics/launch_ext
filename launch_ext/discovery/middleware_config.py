@@ -48,6 +48,8 @@ class IPEndPoint(BaseModel):
         description="IP address or hostname",
     )
     port: int = Field(
+        ge=1,
+        le=65535,
         description="Port number",
     )
 
@@ -106,7 +108,7 @@ class FastDDSMiddleware(BaseModel):
     @field_validator("external_discovery_servers")
     def validate_discovery_servers_for_lo(cls, external_discovery_servers):
         if any(
-            server.address in ["0.0.0.0", "localhost", "127.0.0.1"]
+            server.address in ["0.0.0.0"]
             for server in external_discovery_servers
         ):
             raise ValueError(
