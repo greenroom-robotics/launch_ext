@@ -1,0 +1,59 @@
+[workspace]
+name = "launch_ext"
+channels = [
+  "http://localhost:12222/general",
+  "https://prefix.dev/robostack-kilted",
+  "https://prefix.dev/conda-forge",
+]
+platforms = ["linux-64", "linux-aarch64"]
+preview = ["pixi-build"]
+
+[package]
+name        = "launch_ext"
+version     = "1.26.3"
+description = "Some extras for launch tooling."
+license     = "MIT"
+authors     = ["Russ Webber <russ.webber@greenroomrobotics.com>"]
+
+[package.build.backend]
+name    = "pixi-build-ros-gr"
+version = "*"
+
+[package.build.config]
+mode         = "pixi-native"
+build-type   = "ament_python"
+distro       = "kilted"
+build-number = 0
+
+[package.host-dependencies]
+python = "*"
+
+[package.run-dependencies]
+python                        = "*"
+ros-kilted-launch             = "*"
+ros-kilted-launch-ros         = "*"
+ros-kilted-example-interfaces = "*"
+ros-kilted-xacro              = "*"
+psutil                        = ">=5,<8"
+jinja2                        = ">=3.1,<4"
+gitpython                     = ">=3.1,<4"
+pydantic                      = "*"
+dbus-python                   = "*"
+
+# Tests environment: build and test/lint deps
+[feature.tests.dependencies]
+ros-dev-tools-meta         = "*"
+pkg-config                 = "*"
+python                     = "*"
+pytest                     = "*"
+ros-kilted-ament-lint-auto = "*"
+
+[feature.tests.tasks]
+build = "colcon build"
+colcon-test = { cmd = "bash -c 'colcon test --event-handlers console_direct+ || [ $? -eq 5 ]'", depends-on = [
+  "build",
+] }
+test = { cmd = "colcon test-result --all --verbose", depends-on = ["colcon-test"] }
+
+[environments]
+tests = { features = ["tests"] }
