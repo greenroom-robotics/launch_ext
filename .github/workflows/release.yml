@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   deb:
-    uses: greenroom-robotics/ros_semantic_release_action/.github/workflows/release.yml@main
+    uses: Greenroom-Robotics/ros_semantic_release_action/.github/workflows/release.yml@main
     with:
       package: ${{ inputs.package }}
       package_dir: .
@@ -36,20 +36,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: actions/create-github-app-token@v2
-        id: mise-token
-        with:
-          app-id: ${{ secrets.GH_APP_CLIENT_ID }}
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          owner: greenroom-robotics
-          repositories: mise
-      - uses: actions/checkout@v6
-        with:
-          repository: greenroom-robotics/mise
-          ref: v5
-          token: ${{ steps.mise-token.outputs.token }}
-          path: .mise-action
-      - uses: ./.mise-action/.github/actions/recipes-pr
+      - uses: greenroom-robotics/mise/.github/actions/recipes-pr@v5
         with:
           dispatch-sha: ${{ github.sha }}
           package: ${{ inputs.package }}
