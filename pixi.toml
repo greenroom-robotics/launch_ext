@@ -10,7 +10,7 @@ preview = ["pixi-build"]
 
 [package]
 name        = "launch-ext"
-version     = "1.22.3"
+version     = "2.0.1"
 description = "Some extras for launch tooling."
 license     = "MIT"
 authors     = ["Russ Webber <russ.webber@greenroomrobotics.com>"]
@@ -23,7 +23,6 @@ version = "*"
 mode         = "pixi-native"
 build-type   = "ament_python"
 distro       = "kilted"
-build-number = 2
 
 [package.host-dependencies]
 python = "*"
