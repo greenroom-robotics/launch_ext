@@ -8,6 +8,9 @@ channels = [
 platforms = ["linux-64", "linux-aarch64"]
 preview = ["pixi-build"]
 
+[dependencies]
+launch_ext = { path = "." }          # self-as-workspace-member idiom: pulls run-closure into tests env
+
 [package]
 name        = "launch_ext"
 version     = "2.0.1"
