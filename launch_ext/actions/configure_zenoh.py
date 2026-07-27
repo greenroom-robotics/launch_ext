@@ -16,8 +16,6 @@ from launch.events.process import ProcessStarted
 from launch.launch_context import LaunchContext
 from launch_ros.actions import Node
 import json
-import os
-import shutil
 import launch.logging
 from typing import List, Optional
 from launch.launch_description_entity import LaunchDescriptionEntity
@@ -188,46 +186,23 @@ class ConfigureZenoh(Action):
                 )
             )
 
-            # Renicing to -20 needs elevated privileges. On the deb container
-            # that's passwordless `sudo`; the conda/pixi container runs as an
-            # unprivileged user with no `sudo`, so `sudo renice` can't even
-            # spawn. Pick the form we can actually run, or skip — the router
-            # works fine at default priority.
-            # ponytail: best-effort priority bump, skipped when unprivileged
-            renice_prefix: Optional[List[str]] = None
-            if os.geteuid() == 0:
-                renice_prefix = []
-            elif shutil.which("sudo"):
-                renice_prefix = ["sudo"]
-
-            if renice_prefix is not None:
-
-                def renice_router(
-                    event: ProcessStarted, _context: LaunchContext
-                ) -> List[ExecuteProcess]:
-                    return [
-                        ExecuteProcess(
-                            cmd=[
-                                *renice_prefix,
-                                "renice",
-                                "-n",
-                                "-20",
-                                "-p",
-                                str(event.pid),
-                            ],
-                            name="renice_zenoh_router",
-                            output="both",
-                        )
-                    ]
-
-                # Renice the router process once it has started
-                self.actions.append(
-                    RegisterEventHandler(
-                        OnProcessStart(
-                            target_action=zenoh_router, on_start=renice_router
-                        )
+            def renice_router(
+                event: ProcessStarted, _context: LaunchContext
+            ) -> List[ExecuteProcess]:
+                return [
+                    ExecuteProcess(
+                        cmd=["sudo", "renice", "-n", "-20", "-p", str(event.pid)],
+                        name="renice_zenoh_router",
+                        output="both",
                     )
+                ]
+
+            # Renice the router process once it has started
+            self.actions.append(
+                RegisterEventHandler(
+                    OnProcessStart(target_action=zenoh_router, on_start=renice_router)
                 )
+            )
             self.actions.append(zenoh_router)
 
     def execute(self, context: LaunchContext) -> list[LaunchDescriptionEntity]:
