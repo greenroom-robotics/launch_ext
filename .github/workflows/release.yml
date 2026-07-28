@@ -6,7 +6,16 @@ on:
         type: choice
         description: 'If not specified, all packages will be released.'
         options:
+          - ""
           - launch_ext
+      build_kilted:
+        type: boolean
+        default: true
+        description: "Release for Kilted"
+      build_iron:
+        type: boolean
+        default: true
+        description: "Release for Iron"
 
 permissions:
   contents: write
@@ -14,35 +23,23 @@ permissions:
   id-token: write
 
 jobs:
-  deb:
-    uses: Greenroom-Robotics/ros_semantic_release_action/.github/workflows/release.yml@main
+  release:
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    uses: greenroom-robotics/ros_semantic_release_action/.github/workflows/deb-pixi-release.yml@main
     with:
       package: ${{ inputs.package }}
       package_dir: .
-      build_iron: true
+      build_kilted: ${{ inputs.build_kilted }}
+      build_iron: ${{ inputs.build_iron }}
       changelog: false
-      skip_tag: false
+      ros_distro: kilted
     secrets:
       token: ${{ secrets.API_TOKEN_GITHUB }}
-
-  pixi:
-    needs: deb
-    runs-on: runs-on=${{ github.run_id }}/runner=2cpu-linux-x64
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - uses: greenroom-robotics/mise/.github/actions/recipes-pr@v6
-        with:
-          dispatch-sha: ${{ github.sha }}
-          package: ${{ inputs.package }}
-          ros-distro: kilted
-          gh-app-client-id: ${{ secrets.GH_APP_CLIENT_ID }}
-          gh-app-private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      gh-app-client-id: ${{ secrets.GH_APP_CLIENT_ID }}
+      gh-app-private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
