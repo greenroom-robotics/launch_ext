@@ -6,16 +6,7 @@ on:
         type: choice
         description: 'If not specified, all packages will be released.'
         options:
-          - ""
           - launch_ext
-      build_kilted:
-        type: boolean
-        default: true
-        description: "Release for Kilted"
-      build_iron:
-        type: boolean
-        default: true
-        description: "Release for Iron"
 
 permissions:
   contents: write
@@ -32,8 +23,7 @@ jobs:
     with:
       package: ${{ inputs.package }}
       package_dir: .
-      build_kilted: ${{ inputs.build_kilted }}
-      build_iron: ${{ inputs.build_iron }}
+      build_iron: true
       changelog: false
       ros_distro: kilted
     secrets:
