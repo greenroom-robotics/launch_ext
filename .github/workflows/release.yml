@@ -1,5 +1,4 @@
 name: Tag & Release
-
 on:
   workflow_dispatch:
     inputs:
@@ -9,12 +8,28 @@ on:
         options:
           - launch_ext
 
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   release:
-    uses: Greenroom-Robotics/ros_semantic_release_action/.github/workflows/release.yml@main
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    uses: greenroom-robotics/ros_semantic_release_action/.github/workflows/deb-pixi-release.yml@main
     with:
-      package: ${{ github.event.inputs.package }}
-      public: true
+      package: ${{ inputs.package }}
+      package_dir: .
       build_iron: true
+      changelog: false
+      ros_distro: kilted
     secrets:
       token: ${{ secrets.API_TOKEN_GITHUB }}
+      gh-app-client-id: ${{ secrets.GH_APP_CLIENT_ID }}
+      gh-app-private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
