@@ -50,7 +50,7 @@ repos:
       args: ["--ignore=E203, E266, E501, W503, F403, F401 --max-line-length = 99"]
 
   - repo: https://github.com/ComPWA/taplo-pre-commit
-    rev: v0.9.3
+    rev: 823893e4d72c984f4d08cfc78e3712efd374673d
     hooks:
       - id: taplo-format
         files: (^|/)pixi\.toml$
