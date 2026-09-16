@@ -6,6 +6,7 @@ from . import discovery
 from . import entrypoints
 from . import event_handlers
 from . import events
+from . import ng
 from . import substitutions
 from . import utilities
 
@@ -18,5 +19,6 @@ __all__ = [
     "substitutions",
     "entrypoints",
     "discovery",
+    "ng",
     "utilities",
 ]

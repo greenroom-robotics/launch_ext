@@ -185,9 +185,29 @@ VerifyRepoClean(
 
 #### ConfigureZenoh
 
-Configure Zenoh middleware for ROS 2 communication.
+Configure Zenoh middleware for ROS 2 communication. Two generations of this
+interface ship side by side:
+
+- `launch_ext.actions.ConfigureZenoh` — the pre-2.0 interface, taking
+  `with_router` to start a Zenoh router.
+- `launch_ext.ng.actions.ConfigureZenoh` — the interface introduced in 2.0.0,
+  taking `run_router` to start a Zenoh router.
+
+Pick one generation per launch file; they share no configuration types.
 
 ```python
+from launch_ext.actions import ConfigureZenoh
+
+ConfigureZenoh(
+    with_router=True,
+    router_config={'port': 7447},
+    session_config={'mode': 'peer'}
+)
+```
+
+```python
+from launch_ext.ng.actions import ConfigureZenoh
+
 ConfigureZenoh(
     run_router=True,
     router_config={'port': 7447},
@@ -196,18 +216,38 @@ ConfigureZenoh(
 ```
 
 **Parameters:**
-- `run_router`: Whether to start a Zenoh router
+- `with_router` / `run_router`: Whether to start a Zenoh router
 - `router_config`: Router configuration overrides
 - `session_config`: Session configuration overrides
 
 #### ConfigureFastDDS
 
-Configure FastDDS middleware settings.
+Configure FastDDS middleware settings. Two generations of this interface ship
+side by side:
+
+- `launch_ext.actions.ConfigureFastDDS` — the pre-2.0 interface, taking
+  `with_discovery_server`, `discovery_server_ip`, `allowed_interfaces` and
+  `simple_discovery`. Paired with `launch_ext.discovery.configure_middleware`
+  and the `Discovery` model in `launch_ext.discovery.discovery_config`.
+- `launch_ext.ng.actions.ConfigureFastDDS` — the interface introduced in 2.0.0,
+  taking `discovery_protocol`, `external_interfaces`, `local_discovery_server`,
+  `domain_id` and `inherit`. Paired with
+  `launch_ext.ng.discovery.configure_middleware` and `MiddlewareConfig`.
+
+Pick one generation per launch file; they share no configuration types.
 
 ```python
-ConfigureFastDDS(
-    config_file='/path/to/fastdds.xml'
-)
+from launch_ext.discovery import configure_middleware
+from launch_ext.discovery.discovery_config import Discovery
+
+configure_middleware(Discovery(type="fastdds"))
+```
+
+```python
+from launch_ext.ng.discovery import configure_middleware
+from launch_ext.ng.discovery import MiddlewareConfig, MiddlewareTypes
+
+configure_middleware(MiddlewareConfig(middleware=MiddlewareTypes.FASTDDS))
 ```
 
 ## Conditions

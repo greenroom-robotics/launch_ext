@@ -3,10 +3,10 @@ from launch.substitution import Substitution
 from launch.substitutions import PathJoinSubstitution, LaunchLogDir
 from launch_ros.substitutions import FindPackageShare
 
-from .resolve_host import ResolveHost
-from .ros_distro import ROSDistro
+from ...substitutions.resolve_host import ResolveHost
+from ...substitutions.ros_distro import ROSDistro
 
-from .jinja_template import JinjaTemplate
+from ...substitutions.jinja_template import JinjaTemplate
 
 from ..discovery.middleware_config import IPEndPoint
 
@@ -50,7 +50,7 @@ class FastDDSProfile(Substitution):
 
         self.jtemplate = JinjaTemplate(
             template_path=PathJoinSubstitution(
-                [FindPackageShare("launch_ext"), "config", "fastdds_profile.xml.j2"]
+                [FindPackageShare("launch_ext"), "config", "ng", "fastdds_profile.xml.j2"]
             ),
             template_vars=self.template_vars,
         )

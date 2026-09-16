@@ -6,12 +6,16 @@ package_name = "launch_ext"
 
 setup(
     name=package_name,
-    version="2.0.0",
+    version="2.1.0",
     packages=find_packages(exclude=["test"]),
     data_files=[
         ("share/" + package_name, ["package.xml"]),
         ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
         ("share/" + package_name + "/config", glob.glob("launch_ext/config/*", recursive=True)),
+        (
+            "share/" + package_name + "/config/ng",
+            glob.glob("launch_ext/ng/config/*", recursive=True),
+        ),
     ],
     install_requires=[
         "setuptools",

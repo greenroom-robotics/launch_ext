@@ -74,3 +74,8 @@ def get_fastdds_client_environment(
             discovery_mode, fastdds_profile_path
         )
     }
+
+
+# The pre-2.0 name for FastDDSClientPath. The class is unchanged; only the name
+# differed between the two generations, so both resolve to the same object.
+FastDDSClientEnvironment = FastDDSClientPath
