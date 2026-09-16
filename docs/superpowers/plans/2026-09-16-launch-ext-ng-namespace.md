@@ -308,10 +308,10 @@ Create `test/launch_ext/test_configure_middleware_legacy.py`:
 ```python
 """Tests for the restored pre-2.0 middleware interface."""
 
-from launch.actions import SetLaunchConfiguration
+from launch.actions import ExecuteProcess, RegisterEventHandler, SetLaunchConfiguration
+from launch.event_handlers import OnProcessExit
 
 from launch_ext.actions import ConfigureFastDDS, ConfigureFastDDSEasyMode, ConfigureZenoh
-from launch_ext.actions.execute_and_after_process_exit import ExecuteAndAfterProcessExit
 from launch_ext.discovery import configure_middleware
 from launch_ext.discovery.discovery_config import Discovery
 from launch_ext.substitutions import (
@@ -355,7 +355,13 @@ def test_simple_returns_configure_fastdds():
 def test_fastdds_wraps_daemon_stop_and_shm_clean():
     result = configure_middleware(Discovery(type="fastdds"))
 
-    assert isinstance(result, ExecuteAndAfterProcessExit)
+    # ExecuteAndAfterProcessExit is a function returning [process, RegisterEventHandler],
+    # so the fastdds branch yields the daemon-stop process and its on-exit handler.
+    assert isinstance(result, list)
+    assert len(result) == 2
+    assert isinstance(result[0], ExecuteProcess)
+    assert isinstance(result[1], RegisterEventHandler)
+    assert isinstance(result[1].event_handler, OnProcessExit)
 
 
 def test_superclient_environment_sets_the_profile_env_var():
