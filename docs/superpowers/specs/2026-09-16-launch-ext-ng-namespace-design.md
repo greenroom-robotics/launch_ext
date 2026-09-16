@@ -122,7 +122,8 @@ level; imports of `ng`'s own siblings do not:
 - `setup.py`: `find_packages` picks up `launch_ext.ng.*` automatically; add a `data_files` entry
   installing `launch_ext/ng/config/*` to `share/launch_ext/config/ng`.
 - `ng`'s `FastDDSProfile` resolves its template at `share/launch_ext/config/ng/fastdds_profile.xml.j2`;
-  the restored `FastDDSProfileSubstitution` keeps resolving `share/launch_ext/config/`.
+  the restored `FastDDSProfileSubstitution` keeps building its jinja2 `Environment` rooted at
+  `share/launch_ext/config/`.
 - Version to `2.1.0` in both `setup.py` and `package.xml`.
 
 ### Tests

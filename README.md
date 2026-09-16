@@ -185,9 +185,29 @@ VerifyRepoClean(
 
 #### ConfigureZenoh
 
-Configure Zenoh middleware for ROS 2 communication.
+Configure Zenoh middleware for ROS 2 communication. Two generations of this
+interface ship side by side:
+
+- `launch_ext.actions.ConfigureZenoh` — the pre-2.0 interface, taking
+  `with_router` to start a Zenoh router.
+- `launch_ext.ng.actions.ConfigureZenoh` — the interface introduced in 2.0.0,
+  taking `run_router` to start a Zenoh router.
+
+Pick one generation per launch file; they share no configuration types.
 
 ```python
+from launch_ext.actions import ConfigureZenoh
+
+ConfigureZenoh(
+    with_router=True,
+    router_config={'port': 7447},
+    session_config={'mode': 'peer'}
+)
+```
+
+```python
+from launch_ext.ng.actions import ConfigureZenoh
+
 ConfigureZenoh(
     run_router=True,
     router_config={'port': 7447},
@@ -196,7 +216,7 @@ ConfigureZenoh(
 ```
 
 **Parameters:**
-- `run_router`: Whether to start a Zenoh router
+- `with_router` / `run_router`: Whether to start a Zenoh router
 - `router_config`: Router configuration overrides
 - `session_config`: Session configuration overrides
 
