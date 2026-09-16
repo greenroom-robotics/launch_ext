@@ -4,9 +4,9 @@ import pytest
 
 from launch.actions import ExecuteProcess, RegisterEventHandler, SetLaunchConfiguration
 
-from launch_ext.actions import ConfigureZenoh
-from launch_ext.discovery.configure_middleware import configure_middleware
-from launch_ext.discovery.middleware_config import (
+from launch_ext.ng.actions import ConfigureZenoh
+from launch_ext.ng.discovery.configure_middleware import configure_middleware
+from launch_ext.ng.discovery.middleware_config import (
     MiddlewareConfig,
     ZenohMiddleware,
     FastDDSMiddleware,

@@ -12,6 +12,10 @@ setup(
         ("share/" + package_name, ["package.xml"]),
         ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
         ("share/" + package_name + "/config", glob.glob("launch_ext/config/*", recursive=True)),
+        (
+            "share/" + package_name + "/config/ng",
+            glob.glob("launch_ext/ng/config/*", recursive=True),
+        ),
     ],
     install_requires=[
         "setuptools",
