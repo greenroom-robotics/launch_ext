@@ -45,6 +45,9 @@ setup(
             "relative_latest_symlink ="
             " launch_ext.ros2launch_options.relative_latest_symlink"
             ":RelativeLatestSymlinkOption",
+            "mcap_logging ="
+            " launch_ext.ros2launch_options.mcap_logging"
+            ":McapLoggingOption",
         ],
     },
 )

@@ -10,6 +10,7 @@ from mcap.exceptions import EndOfFile
 from mcap.reader import NonSeekingReader, make_reader
 
 from launch_ext.patches import mcap_logging
+from launch_ext.ros2launch_options.mcap_logging import McapLoggingOption
 
 
 @pytest.fixture(autouse=True)
@@ -159,3 +160,18 @@ def test_concurrent_emits_all_land(clean_logging):
         t.join()
     mcap_logging._close_all()
     assert len(read_messages(clean_logging / "launch.mcap")) == 8 * 200
+
+
+def test_prestart_applies_only_when_env_truthy(monkeypatch):
+    default = launch.logging.launch_config.log_handler_factory
+    for value in ("", "0", "false", "no", "off"):
+        monkeypatch.setenv("LAUNCH_LOG_MCAP", value)
+        McapLoggingOption().prestart(None)
+        assert launch.logging.launch_config.log_handler_factory is default
+    monkeypatch.delenv("LAUNCH_LOG_MCAP")
+    McapLoggingOption().prestart(None)
+    assert launch.logging.launch_config.log_handler_factory is default
+
+    monkeypatch.setenv("LAUNCH_LOG_MCAP", " TRUE ")
+    McapLoggingOption().prestart(None)
+    assert launch.logging.launch_config.log_handler_factory is mcap_logging.mcap_handler_factory

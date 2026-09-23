@@ -14,6 +14,7 @@ Extended functionality for ROS 2 launch system providing additional actions, sub
     - [ExecuteProcessExt](#executeprocessext)
     - [IncludePackageLaunchFile](#includepackagelaunchfile)
     - [LogRotate](#logrotate)
+    - [MCAP Logging](#mcap-logging)
     - [MakeDeviceNode](#makedevicenode)
     - [SetLaunchConfigurationIfNotNone](#setlaunchconfigurationifnotnone)
     - [WriteFile](#writefile)
@@ -84,6 +85,31 @@ LogRotate(
 - `log_file`: Path to the log file to rotate
 - `max_size`: Maximum size before rotation
 - `backup_count`: Number of backup files to keep
+
+### MCAP Logging
+
+Write launch's log files — the main `launch.log` and each process's
+`<proc>-stdout.log` / `<proc>-stderr.log` / `<proc>.log` — into a single
+`launch.mcap` in the log directory **instead of** the `.log` files. Each former
+file is a topic (`/launch`, `/talker-1-stdout`, ...) of `foxglove.Log` messages,
+so the file opens directly in Foxglove's Log panel. Screen output is unchanged.
+
+```bash
+LAUNCH_LOG_MCAP=1 ros2 launch my_pkg my.launch.py
+# -> ~/.ros/log/latest/launch.mcap
+```
+
+`LAUNCH_LOG_MCAP` accepts `1`/`true`/`yes`/`on`; anything else leaves the normal
+`.log` files in place. For a custom entrypoint that builds its own
+`LaunchService`, call `launch_ext.patches.mcap_logging.apply()` first.
+
+Notes:
+- Launch logs process stderr at INFO, so it shows as INFO — filter on the
+  `-stderr` topic instead.
+- The file is written unchunked and flushed per record, so a killed launch keeps
+  everything logged so far; run `mcap recover` on it to rebuild the index.
+- Nodes' own ROS log files (`~/.ros/log/<node>_*.log`) and `/rosout` are not
+  written by launch and are not included.
 
 ### MakeDeviceNode
 
