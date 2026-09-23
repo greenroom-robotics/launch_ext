@@ -37,6 +37,7 @@ psutil                        = ">=5,<8"
 jinja2                        = ">=3.1,<4"
 gitpython                     = ">=3.1,<4"
 dbus-python                   = "*"
+mcap                          = ">=1.4,<2"
 
 [package.extra-dependencies.test]
 ros-dev-tools-meta         = "*"
