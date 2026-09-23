@@ -71,6 +71,9 @@ _LEVELS = (
 )
 
 
+_TRACEBACK_FORMATTER = logging.Formatter()
+
+
 def _foxglove_level(levelno):
     """Map a stdlib ``logging`` level number to a ``foxglove.LogLevel`` value."""
     for threshold, level in _LEVELS:
@@ -171,12 +174,19 @@ class McapLogHandler(launch.logging.handlers.Handler):
         try:
             log_time = int(record.created * 1e9)
             sec, nsec = divmod(log_time, 1_000_000_000)
+            # Keep tracebacks like FileHandler does; launch's text formatters are
+            # ignored (fields carry timestamp/level/name), so format them directly.
+            message = record.getMessage()
+            if record.exc_info:
+                message += "\n" + _TRACEBACK_FORMATTER.formatException(record.exc_info)
+            if record.stack_info:
+                message += "\n" + _TRACEBACK_FORMATTER.formatStack(record.stack_info)
             data = json.dumps(
                 {
                     "timestamp": {"sec": sec, "nsec": nsec},
                     "level": _foxglove_level(record.levelno),
                     "name": record.name,
-                    "message": record.getMessage(),
+                    "message": message,
                     "file": record.pathname,
                     "line": record.lineno,
                 }

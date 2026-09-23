@@ -175,3 +175,21 @@ def test_prestart_applies_only_when_env_truthy(monkeypatch):
     monkeypatch.setenv("LAUNCH_LOG_MCAP", " TRUE ")
     McapLoggingOption().prestart(None)
     assert launch.logging.launch_config.log_handler_factory is mcap_logging.mcap_handler_factory
+
+
+def test_tracebacks_are_kept(clean_logging):
+    """logger.exception()/stack_info output reaches the MCAP, as it did the .log file."""
+    handler = mcap_logging.mcap_handler_factory(str(clean_logging / "launch.log"))
+    logger = logging.getLogger("traceback-test")
+    logger.addHandler(handler)
+    try:
+        raise ValueError("boom")
+    except ValueError:
+        logger.exception("failed")
+    logger.warning("where", stack_info=True)
+    mcap_logging._close_all()
+
+    exc, stack = [m["message"] for _, _, m in read_messages(clean_logging / "launch.mcap")]
+    assert exc.startswith("failed\nTraceback (most recent call last):")
+    assert "ValueError: boom" in exc
+    assert stack.startswith("where\nStack (most recent call last):")
