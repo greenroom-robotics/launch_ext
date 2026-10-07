@@ -21,7 +21,7 @@ authors     = ["Russ Webber <russ.webber@greenroomrobotics.com>"]
 
 [package.build.backend]
 name    = "pixi-build-ros-gr"
-version = ">=0.5,<0.6"
+version = "*"
 
 [package.build.config]
 mode       = "pixi-native"
