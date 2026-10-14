@@ -41,6 +41,8 @@ git                           = "*"
 pydantic                      = ">=2,<3"
 dbus-python                   = "*"
 ros-kilted-rmw-zenoh-cpp      = ">=0.6.9"
+ros-kilted-fastdds            = "*"
+ros-kilted-ros2cli            = "*"
 
 [package.extra-dependencies.test]
 ros-dev-tools-meta         = "*"
