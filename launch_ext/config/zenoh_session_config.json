@@ -189,11 +189,11 @@
       }
     },
     "shared_memory": {
-      "enabled": false,
+      "enabled": true,
       "mode": "lazy",
       "transport_optimization": {
         "enabled": true,
-        "pool_size": 50331648,
+        "pool_size": 524288,
         "message_size_threshold": 512
       }
     },
