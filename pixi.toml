@@ -40,6 +40,7 @@ gitpython                     = ">=3.1,<4"
 git                           = "*"
 pydantic                      = ">=2,<3"
 dbus-python                   = "*"
+ros-kilted-rmw-zenoh-cpp      = ">=0.6.9"
 
 [package.extra-dependencies.test]
 ros-dev-tools-meta         = "*"
